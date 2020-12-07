@@ -1,27 +1,39 @@
 package ch.css.coaching;
 
+import static ch.css.coaching.Score.*;
+
 public class Player {
 
-  private Score score = Score.LOVE;
-  private boolean isWinner;
+  private Score score;
+
+  public Player() {
+    resetScore();
+  }
+
+  public boolean hasMatchball(Score opponentScore) {
+    if(score == ADVANTAGE){
+      return true;
+    }
+    return score == FORTY && opponentScore.isLessThan(FORTY);
+  }
 
   public void setScore(Score score) {
     this.score = score;
   }
 
-  public Score getScore() {
+  public Score score() {
     return score;
   }
 
-  public boolean isWinner() {
-    return isWinner;
+  public void increaseScore() {
+    score = score.next();
   }
 
-  public void wins() {
-    isWinner = true;
+  public void decreaseScore() {
+    score = score.previous();
   }
 
-  public boolean hasHighScore() {
-    return score == Score.FORTY || score == Score.ADVANTAGE;
+  public void resetScore() {
+    score = LOVE;
   }
 }

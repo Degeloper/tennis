@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ch.css.coaching.Score.*;
+import static ch.css.coaching.Score.ADVANTAGE;
+import static ch.css.coaching.Score.FORTY;
 
 public class Game {
 
   private final List<Player> players = new ArrayList<>();
+  private Player winner;
 
   public Game(Player player1, Player player2) {
     players.add(player1);
@@ -16,44 +18,25 @@ public class Game {
   }
 
   public Optional<Player> winner() {
-    return players.stream()
-      .filter(Player::isWinner)
-      .findAny();
+    return Optional.ofNullable(winner);
   }
 
   public void scoreBall(Player player) {
-    switch (player.getScore()) {
-      case LOVE:
-        player.setScore(FIFTEEN);
-        break;
-      case FIFTEEN:
-        player.setScore(THIRTY);
-        break;
-      case THIRTY:
-        player.setScore(FORTY);
-        break;
-      case ADVANTAGE:
-        player.wins();
-        break;
-      case FORTY:
-        if (isDeuce()) {
-          Player opponent = opponent(player);
-          if (opponent.getScore() == ADVANTAGE) {
-            opponent.setScore(FORTY);
-          } else {
-            player.setScore(ADVANTAGE);
-          }
-        } else {
-          player.wins();
-        }
-        break;
+    Player opponent = opponent(player);
+    if (player.hasMatchball(opponent.score())) {
+      winner = player;
+      players.forEach(Player::resetScore);
+    } else if (opponent.score() == ADVANTAGE) {
+      opponent.decreaseScore();
+    } else {
+      player.increaseScore();
     }
   }
 
   public boolean isDeuce() {
-    return players.stream().allMatch(Player::hasHighScore);
+    return players.stream()
+      .allMatch(p -> p.score() == FORTY);
   }
-
 
   private Player opponent(Player player) {
     return players.stream()
