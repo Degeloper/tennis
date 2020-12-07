@@ -21,16 +21,19 @@ public class Game {
     return Optional.ofNullable(winner);
   }
 
-  public void scoreBall(Player player) {
-    Player opponent = opponent(player);
-    if (player.hasMatchball(opponent.score())) {
-      winner = player;
-      players.forEach(Player::resetScore);
-    } else if (opponent.score() == ADVANTAGE) {
+  public void scoreBall(Player scoringPlayer) {
+    Player opponent = opponentOf(scoringPlayer);
+    if (scoringPlayer.hasMatchball(opponent.score()))
+      electWinnerAndResetScores(scoringPlayer);
+    else if (opponent.score() == ADVANTAGE)
       opponent.decreaseScore();
-    } else {
-      player.increaseScore();
-    }
+    else
+      scoringPlayer.increaseScore();
+  }
+
+  private void electWinnerAndResetScores(Player player) {
+    winner = player;
+    players.forEach(Player::resetScore);
   }
 
   public boolean isDeuce() {
@@ -38,7 +41,7 @@ public class Game {
       .allMatch(p -> p.score() == FORTY);
   }
 
-  private Player opponent(Player player) {
+  private Player opponentOf(Player player) {
     return players.stream()
       .filter(p -> p != player)
       .findFirst()

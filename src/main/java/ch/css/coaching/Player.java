@@ -11,10 +11,9 @@ public class Player {
   }
 
   public boolean hasMatchball(Score opponentScore) {
-    if(score == ADVANTAGE){
+    if (score == FORTY && opponentScore.isLessThan(FORTY))
       return true;
-    }
-    return score == FORTY && opponentScore.isLessThan(FORTY);
+    return score == ADVANTAGE;
   }
 
   public void setScore(Score score) {
