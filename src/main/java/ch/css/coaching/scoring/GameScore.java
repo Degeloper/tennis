@@ -1,18 +1,18 @@
-package ch.css.coaching;
+package ch.css.coaching.scoring;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ch.css.coaching.Score.ADVANTAGE;
-import static ch.css.coaching.Score.FORTY;
+import static ch.css.coaching.scoring.Score.ADVANTAGE;
+import static ch.css.coaching.scoring.Score.FORTY;
 
-public class Game {
+public class GameScore {
 
   private final List<Player> players = new ArrayList<>();
   private Player winner;
 
-  public Game(Player player1, Player player2) {
+  public GameScore(Player player1, Player player2) {
     players.add(player1);
     players.add(player2);
   }

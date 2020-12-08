@@ -13,15 +13,10 @@
 </head>
 <body>
 <canvas id="field" width="480" height="320"></canvas>
-
+<div id="content">Nothing</div>
 <script>
   var canvas = document.getElementById("field");
   var ctx = canvas.getContext("2d");
-  var x = canvas.width/2;
-  var y = canvas.height/2;
-  var ballRadius = 10;
-  var dx = 2;
-  var dy = -2;
   var paddleHeight = 75;
   var paddleWidth = 10;
   var paddleY = (canvas.height-paddleHeight) / 2;
@@ -30,6 +25,19 @@
 
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
+
+  function connectToGame() {
+    let websocket = new WebSocket("ws://" + window.location.host + "/");
+
+    websocket.onopen = function (e) {
+      setInterval(draw, 10);
+    }
+    websocket.onmessage = function (e) {
+      let ball = JSON.parse(e.data);
+      document.getElementById("content").innerHTML = ball.x;
+      drawBall(ball);
+    }
+  }
 
   function keyDownHandler(e) {
     if(e.key == "Down" || e.key == "ArrowDown") {
@@ -49,9 +57,11 @@
     }
   }
 
-  function drawBall() {
+  function drawBall(ball) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPaddle()
     ctx.beginPath();
-    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
     ctx.fillStyle = "gray";
     ctx.fill();
     ctx.closePath();
@@ -66,17 +76,7 @@
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
     drawPaddle();
-
-    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
-      dx = -dx;
-    }
-    if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
-      dy = -dy;
-    }
-
     if(downPressed) {
       paddleY += 7;
       if (paddleY + paddleHeight > canvas.height){
@@ -89,12 +89,9 @@
         paddleY = 0;
       }
     }
-
-    x += dx;
-    y += dy;
   }
-  setInterval(draw, 10);
 
+  connectToGame();
 </script>
 
 </body>

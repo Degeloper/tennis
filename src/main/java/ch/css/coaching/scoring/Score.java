@@ -1,4 +1,4 @@
-package ch.css.coaching;
+package ch.css.coaching.scoring;
 
 public enum Score {
   LOVE(0) {

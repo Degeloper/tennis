@@ -1,30 +1,32 @@
 package ch.css.coaching;
 
+import ch.css.coaching.scoring.GameScore;
+import ch.css.coaching.scoring.Player;
 import org.junit.jupiter.api.Test;
 
-import static ch.css.coaching.Score.ADVANTAGE;
-import static ch.css.coaching.Score.FORTY;
+import static ch.css.coaching.scoring.Score.ADVANTAGE;
+import static ch.css.coaching.scoring.Score.FORTY;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-class GameTest {
+class GameScoreTest {
 
   private final Player player1 = new Player();
   private final Player player2 = new Player();
-  private final Game game = new Game(player1, player2);
+  private final GameScore gameScore = new GameScore(player1, player2);
 
 
   @Test
   void initialState_noWinner() {
-    assertThat(game.winner()).isEmpty();
+    assertThat(gameScore.winner()).isEmpty();
   }
 
   @Test
   void player1ScoreIsForty_player1Scores_player1IsWinner() {
     player1.setScore(FORTY);
 
-    game.scoreBall(player1);
+    gameScore.scoreBall(player1);
 
-    assertThat(game.winner()).contains(player1);
+    assertThat(gameScore.winner()).contains(player1);
   }
 
   @Test
@@ -32,7 +34,7 @@ class GameTest {
     player1.setScore(FORTY);
     player2.setScore(FORTY);
 
-    assertThat(game.isDeuce()).isTrue();
+    assertThat(gameScore.isDeuce()).isTrue();
   }
 
   @Test
@@ -40,10 +42,10 @@ class GameTest {
     player1.setScore(FORTY);
     player2.setScore(FORTY);
 
-    game.scoreBall(player1);
+    gameScore.scoreBall(player1);
 
     assertThat(player1.score()).isEqualTo(ADVANTAGE);
-    assertThat(game.winner()).isEmpty();
+    assertThat(gameScore.winner()).isEmpty();
   }
 
   @Test
@@ -51,7 +53,7 @@ class GameTest {
     player2.setScore(ADVANTAGE);
     player1.setScore(FORTY);
 
-    game.scoreBall(player1);
+    gameScore.scoreBall(player1);
 
     assertThat(player1.score()).isEqualTo(FORTY);
     assertThat(player2.score()).isEqualTo(FORTY);

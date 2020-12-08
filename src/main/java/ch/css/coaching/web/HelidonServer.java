@@ -1,4 +1,4 @@
-package ch.css.coaching;
+package ch.css.coaching.web;
 
 import io.helidon.config.Config;
 import io.helidon.health.HealthSupport;
@@ -8,7 +8,9 @@ import io.helidon.metrics.MetricsSupport;
 import io.helidon.webserver.Routing;
 import io.helidon.webserver.StaticContentSupport;
 import io.helidon.webserver.WebServer;
+import io.helidon.webserver.tyrus.TyrusSupport;
 
+import javax.websocket.server.ServerEndpointConfig;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,12 +30,16 @@ public class HelidonServer {
     return Routing.builder()
       .register(health)  // Health at "/health"
       .register(metrics) // Metrics at "/metrics"
+      .register("/", TyrusSupport.builder().register(
+        ServerEndpointConfig.Builder.create(GameEndpoint.class, "/")
+          .build())
+        .build())
       .register("/", StaticContentSupport.builder("/assets")
         .welcomeFileName("index.html"))
       .build();
   }
 
-  static void start() {
+  public static void start() {
     // By default this will pick up application.yaml from the classpath
     Config config = Config.create();
 
