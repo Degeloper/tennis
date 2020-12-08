@@ -7,8 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.websocket.Session;
 import java.io.IOException;
-import java.util.logging.Logger;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WebSocketGame {
 
@@ -21,20 +23,23 @@ public class WebSocketGame {
   }
 
   public void addPlayerSession(Session playerSession) {
+    playerSession.addMessageHandler(new RacketHandler());
     this.playerSession = playerSession;
     startGame();
   }
 
   void startGame() {
-    while (true) {
-      try {
-        Thread.sleep(10);
-        Ball ball = field.moveBall();
-        playerSession.getBasicRemote().sendText(toJson(ball));
-      } catch (InterruptedException | IOException e) {
-        LOGGER.log(Level.SEVERE, e.getMessage());
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+      public void run() {
+        try {
+          Ball ball = field.moveBall();
+          playerSession.getBasicRemote().sendText(toJson(ball));
+        } catch (IOException e) {
+          LOGGER.log(Level.SEVERE, e.getMessage());
+        }
       }
-    }
+    }, 0, 10);
   }
 
   private String toJson(Ball ball) {

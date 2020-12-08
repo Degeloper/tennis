@@ -17,7 +17,9 @@ public class Field {
   }
 
   private void initBall() {
-    ball = new Ball(width / 2, height / 2, ballRadius);
+    int middleX = width / 2;
+    int middleY = height / 2;
+    ball = new Ball(middleX, middleY, ballRadius);
   }
 
   public Ball moveBall() {

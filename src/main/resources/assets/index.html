@@ -27,35 +27,35 @@
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
 
-  function connectToGame() {
-    let websocket = new WebSocket("ws://" + window.location.host + "/");
-
-    websocket.onopen = function (e) {
-      setInterval(draw, 10);
-    }
-    websocket.onmessage = function (e) {
-      let ball = JSON.parse(e.data);
-      document.getElementById("ballX").innerHTML = ball.x;
-      document.getElementById("ballY").innerHTML = ball.y;
-      drawBall(ball);
-    }
+  let websocket = new WebSocket("ws://" + window.location.host + "/");
+  websocket.onopen = function (e) {
+    setInterval(draw, 10);
   }
-
+  websocket.onmessage = function (e) {
+    let ball = JSON.parse(e.data);
+    document.getElementById("ballX").innerHTML = ball.x;
+    document.getElementById("ballY").innerHTML = ball.y;
+    drawBall(ball);
+  }
   function keyDownHandler(e) {
     if(e.key == "Down" || e.key == "ArrowDown") {
       downPressed = true;
+      websocket.send("DOWN");
     }
     else if(e.key == "Up" || e.key == "ArrowUp") {
       upPressed = true;
+      websocket.send("UP")
     }
   }
 
   function keyUpHandler(e) {
     if(e.key == "Down" || e.key == "ArrowDown") {
       downPressed = false;
+      websocket.send("STOP");
     }
     else if(e.key == "Up" || e.key == "ArrowUp") {
       upPressed = false;
+      websocket.send("STOP");
     }
   }
 
@@ -92,8 +92,6 @@
       }
     }
   }
-
-  connectToGame();
 </script>
 
 </body>
