@@ -13,7 +13,8 @@
 </head>
 <body>
 <canvas id="field" width="480" height="320"></canvas>
-<div id="content">Nothing</div>
+<div id="ballX">-</div>
+<div id="ballY">-</div>
 <script>
   var canvas = document.getElementById("field");
   var ctx = canvas.getContext("2d");
@@ -34,7 +35,8 @@
     }
     websocket.onmessage = function (e) {
       let ball = JSON.parse(e.data);
-      document.getElementById("content").innerHTML = ball.x;
+      document.getElementById("ballX").innerHTML = ball.x;
+      document.getElementById("ballY").innerHTML = ball.y;
       drawBall(ball);
     }
   }
