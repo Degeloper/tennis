@@ -12,6 +12,18 @@ repositories {
 }
 
 dependencies {
+  // import Helidon BOM
+  implementation enforcedPlatform("io.helidon:helidon-dependencies:2.0.2")
+  implementation 'io.helidon.webserver:helidon-webserver'
+  implementation 'io.helidon.webserver:helidon-webserver-tyrus'
+  implementation 'io.helidon.media:helidon-media-jsonp'
+  implementation 'io.helidon.config:helidon-config-yaml'
+  implementation 'io.helidon.health:helidon-health'
+  implementation 'io.helidon.health:helidon-health-checks'
+  implementation 'io.helidon.metrics:helidon-metrics'
+
+  compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+
   testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.2.0'
   testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.2.0'
   testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0'
