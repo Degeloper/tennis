@@ -33,32 +33,26 @@ public class WebSocketGame {
     playerSessions.put(playerSession, newPlayer);
     Racket racket = field.newRacket(newPlayer);
     playerSession.addMessageHandler(new RacketHandler(racket));
-    if (playerSessions.size() == 2) {
-      gameScore = new GameScore(playerSessions.values().toArray(new Player[0]));
+    if (playerSessions.size() == 2)
       startGame();
-    }
   }
 
-  void startGame() {
+  private void startGame() {
+    gameScore = new GameScore(playerSessions.values().toArray(new Player[0]));
     timer = new Timer();
     timer.schedule(runnableGame(), 0, 10);
-
   }
 
   private TimerTask runnableGame() {
     return new TimerTask() {
       public void run() {
-        if (gameScore.winner().isPresent()) {
+        if (gameScore.winner().isPresent())
           closeSessionsAndTellWinner(gameScore.winner().get());
-        }
         Optional<Racket> missedRacket = field.missedRacket();
-        if (missedRacket.isPresent()) {
-          Player opponent = gameScore.opponentOf(missedRacket.get().getPlayer());
-          gameScore.scoreBall(opponent);
-          field.initBall();
-        } else {
+        if (missedRacket.isPresent())
+          givePointToOpponentOf(missedRacket.get().getPlayer());
+        else
           field.moveBall();
-        }
         playerSessions.forEach((s, p) -> {
           try {
             s.getBasicRemote().sendText(toJson(field));
@@ -70,10 +64,16 @@ public class WebSocketGame {
     };
   }
 
+  private void givePointToOpponentOf(Player player) {
+    Player opponent = gameScore.opponentOf(player);
+    gameScore.scoreBall(opponent);
+    field.initBall();
+  }
+
   private void closeSessionsAndTellWinner(Player winningPlayer) {
     playerSessions.forEach((session, player) -> {
         try {
-          if(player == winningPlayer)
+          if (player == winningPlayer)
             session.close(new CloseReason(NORMAL_CLOSURE, "YOU WON!"));
           else
             session.close(new CloseReason(NORMAL_CLOSURE, "YOU LOST!"));
