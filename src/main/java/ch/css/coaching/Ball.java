@@ -1,5 +1,7 @@
 package ch.css.coaching;
 
+import ch.css.coaching.web.Racket;
+
 public class Ball {
   private int x;
   private int y;
@@ -31,5 +33,12 @@ public class Ball {
   public void move(int deltaX, int deltaY) {
     this.x += deltaX;
     this.y += deltaY;
+  }
+
+  public boolean collideWithRacket(Racket racket, int dx, int dy) {
+    return x + dx <= racket.borderRightX() &&
+      x + dx >= racket.borderLeftX() &&
+      y + dy <= racket.borderTopY() &&
+      y + dy >= racket.borderBottomY();
   }
 }

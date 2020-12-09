@@ -18,50 +18,31 @@
 <script>
   var canvas = document.getElementById("field");
   var ctx = canvas.getContext("2d");
-  var paddleHeight = 75;
-  var paddleWidth = 10;
-  var paddleY = (canvas.height-paddleHeight) / 2;
-  var downPressed = false;
-  var upPressed = false;
 
   document.addEventListener("keydown", keyDownHandler, false);
-  document.addEventListener("keyup", keyUpHandler, false);
 
   let websocket = new WebSocket("ws://" + window.location.host + "/");
   websocket.onopen = function (e) {
-    setInterval(draw, 10);
   }
+
   websocket.onmessage = function (e) {
-    let ball = JSON.parse(e.data);
-    document.getElementById("ballX").innerHTML = ball.x;
-    document.getElementById("ballY").innerHTML = ball.y;
-    drawBall(ball);
+    let field = JSON.parse(e.data);
+    document.getElementById("ballX").innerHTML = field.ball.x;
+    document.getElementById("ballY").innerHTML = field.ball.y;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBall(field.ball);
+    drawRacket(field.racket)
   }
   function keyDownHandler(e) {
     if(e.key == "Down" || e.key == "ArrowDown") {
-      downPressed = true;
       websocket.send("DOWN");
     }
     else if(e.key == "Up" || e.key == "ArrowUp") {
-      upPressed = true;
       websocket.send("UP")
     }
   }
 
-  function keyUpHandler(e) {
-    if(e.key == "Down" || e.key == "ArrowDown") {
-      downPressed = false;
-      websocket.send("STOP");
-    }
-    else if(e.key == "Up" || e.key == "ArrowUp") {
-      upPressed = false;
-      websocket.send("STOP");
-    }
-  }
-
   function drawBall(ball) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawPaddle()
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
     ctx.fillStyle = "gray";
@@ -69,28 +50,12 @@
     ctx.closePath();
   }
 
-  function drawPaddle() {
+  function drawRacket(racket) {
     ctx.beginPath();
-    ctx.rect(0, paddleY, paddleWidth, paddleHeight);
+    ctx.rect(racket.x, racket.y, racket.width, racket.height);
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
-  }
-
-  function draw() {
-    drawPaddle();
-    if(downPressed) {
-      paddleY += 7;
-      if (paddleY + paddleHeight > canvas.height){
-        paddleY = canvas.height - paddleHeight;
-      }
-    }
-    else if(upPressed) {
-      paddleY -= 7;
-      if (paddleY < 0){
-        paddleY = 0;
-      }
-    }
   }
 </script>
 

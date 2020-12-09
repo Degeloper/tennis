@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.websocket.Session;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -16,35 +18,41 @@ public class WebSocketGame {
 
   private static final Logger LOGGER = Logger.getLogger(WebSocketGame.class.getName());
   private final Field field;
-  private Session playerSession;
+  private final List<Session> playerSessions = new ArrayList<>();
+
 
   public WebSocketGame() {
     field = new Field(480, 320);
   }
 
   public void addPlayerSession(Session playerSession) {
-    playerSession.addMessageHandler(new RacketHandler());
-    this.playerSession = playerSession;
+    Racket racket = field.newRacket();
+    playerSession.addMessageHandler(new RacketHandler(racket));
+    playerSessions.add(playerSession);
     startGame();
+
   }
 
   void startGame() {
     Timer timer = new Timer();
     timer.schedule(new TimerTask() {
       public void run() {
-        try {
-          Ball ball = field.moveBall();
-          playerSession.getBasicRemote().sendText(toJson(ball));
-        } catch (IOException e) {
-          LOGGER.log(Level.SEVERE, e.getMessage());
-        }
+
+        field.moveBall();
+        playerSessions.forEach(s -> {
+          try {
+            s.getBasicRemote().sendText(toJson(field));
+          } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+          }
+        });
       }
     }, 0, 10);
   }
 
-  private String toJson(Ball ball) {
+  private String toJson(Field field) {
     try {
-      return new ObjectMapper().writeValueAsString(ball);
+      return new ObjectMapper().writeValueAsString(field);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
       return "{}";
