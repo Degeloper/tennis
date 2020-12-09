@@ -34,10 +34,10 @@ public class Ball {
     this.y += deltaY;
   }
 
-  public boolean collideWithRacket(Racket racket, int dx, int dy) {
-    return x + dx - radius <= racket.borderRightX() &&
-      x + dx + radius >= racket.borderLeftX() &&
-      y + dy - radius <= racket.borderTopY() &&
-      y + dy + radius >= racket.borderBottomY();
+  public boolean collidesWithRacket(Racket racket, int dx, int dy) {
+    return x + dx <= racket.borderRightX() &&
+      x + dx >= racket.borderLeftX() &&
+      y + dy >= racket.borderTopY() &&
+      y + dy <= racket.borderBottomY();
   }
 }

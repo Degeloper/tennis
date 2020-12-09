@@ -1,9 +1,13 @@
 package ch.css.coaching;
 
+import ch.css.coaching.scoring.Player;
 import ch.css.coaching.web.Racket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Comparator.comparingInt;
 
 public class Field {
 
@@ -26,7 +30,7 @@ public class Field {
   }
 
   public void moveBall() {
-    checkCollitions();
+    checkCollisions();
     ball.move(dx, dy);
   }
 
@@ -34,23 +38,23 @@ public class Field {
     return ball;
   }
 
-  private void checkCollitions() {
+  private void checkCollisions() {
     if (ball.collidesWithBorders(height, dy))
       dy = -dy;
-    if (ballCollidesAnyRacket())
+    if (ballCollidesWithAnyRacket())
       dx = -dx;
   }
 
-  private boolean ballCollidesAnyRacket() {
+  private boolean ballCollidesWithAnyRacket() {
     return rackets.stream()
-      .anyMatch(r -> ball.collideWithRacket(r, dx, dy));
+      .anyMatch(r -> ball.collidesWithRacket(r, dx, dy));
   }
 
-  public Racket newRacket() {
+  public Racket newRacket(Player player) {
     int x = 0;
     if (rackets.size() == 1)
       x = width - 10;
-    Racket newRacket = new Racket(x, height);
+    Racket newRacket = new Racket(x, height, player);
     rackets.add(newRacket);
     return newRacket;
   }
@@ -59,8 +63,15 @@ public class Field {
     return rackets;
   }
 
-  public boolean ballIsOutside() {
-    return ball.getX() < 0 || ball.getX() > width;
+  public Optional<Racket> missedRacket() {
+    if (ball.getX() < 0)
+      return rackets.stream().min(comparingInt(Racket::getX));
+    if (ball.getX() > width)
+      return rackets.stream().max(comparingInt(Racket::getX));
+    return Optional.empty();
   }
 
+  public void resetRackets() {
+    rackets.clear();
+  }
 }

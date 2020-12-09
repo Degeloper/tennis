@@ -16,6 +16,10 @@ public class Player {
     return score == ADVANTAGE;
   }
 
+  public Score getScore() {
+    return score;
+  }
+
   public void setScore(Score score) {
     this.score = score;
   }

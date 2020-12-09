@@ -32,4 +32,8 @@ public enum Score {
   public Score previous() {
     return values()[ordinal() - 1];
   }
+
+  public int getValue() {
+    return value;
+  }
 }

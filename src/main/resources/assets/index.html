@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <title>CSS Coaching Tennis Game</title>
   <style>
     * {
       padding: 0;
       margin: 0;
     }
-    canvas { background: #eee; display: block; margin: 0 auto; }
+
+    canvas {
+      background: #eee;
+      display: block;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
+<table style="width:100%;">
+  <tr>
+    <td style="width: 30%;">
+      <div id="score0" style="float:right;">-</div>
+    </td>
+    <td style="width: 30%;">
+      <div style="text-align: center">Score</div>
+    </td>
+    <td style="width: 30%;">
+      <div id="score1" style="float:left;">-</div>
+    </td>
+  </tr>
+</table>
+<div id="status" style="text-align: center;">WAITING FOR PLAYER 2...</div>
 <canvas id="field" width="480" height="320"></canvas>
 <script>
   document.addEventListener("keydown", keyDownHandler, false);
@@ -21,34 +40,40 @@
 
   let websocket = new WebSocket("ws://" + window.location.host + "/");
 
+  websocket.onclose = function (e) {
+    document.getElementById("status").innerHTML = e.reason;
+  }
+
   websocket.onmessage = function (e) {
+    document.getElementById("status").innerHTML = "";
     let field = JSON.parse(e.data);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall(field.ball);
-    field.rackets.forEach(drawRacket)
+    field.rackets.forEach(drawPlayerElements)
   }
 
   function keyDownHandler(e) {
-    if(e.key == "Down" || e.key == "ArrowDown")
+    if (e.key == "Down" || e.key == "ArrowDown")
       websocket.send("DOWN");
-    else if(e.key == "Up" || e.key == "ArrowUp")
+    else if (e.key == "Up" || e.key == "ArrowUp")
       websocket.send("UP")
   }
 
   function drawBall(ball) {
     ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fillStyle = "gray";
     ctx.fill();
     ctx.closePath();
   }
 
-  function drawRacket(racket, index) {
+  function drawPlayerElements(racket, index) {
     ctx.beginPath();
     ctx.rect(racket.x, racket.y, racket.width, racket.height);
     ctx.fillStyle = racketColors[index];
     ctx.fill();
     ctx.closePath();
+    document.getElementById("score"+index).innerHTML = racket.player.score;
   }
 </script>
 

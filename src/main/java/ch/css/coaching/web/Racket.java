@@ -1,5 +1,7 @@
 package ch.css.coaching.web;
 
+import ch.css.coaching.scoring.Player;
+
 import static ch.css.coaching.web.RacketAction.DOWN;
 import static ch.css.coaching.web.RacketAction.UP;
 
@@ -7,11 +9,13 @@ public class Racket {
 
   private final int racketHeight = 75;
   private final int racketWidth = 10;
+
+  private final Player player;
+
   private int y;
   private final int x;
   private final int deltaY = 7;
   private final int fieldHeight;
-
   public int getY() {
     return y;
   }
@@ -28,10 +32,15 @@ public class Racket {
     return racketWidth;
   }
 
-  public Racket(int x, int fieldHeight) {
+  public Player getPlayer() {
+    return player;
+  }
+
+  public Racket(int x, int fieldHeight, Player player) {
     this.x = x;
     this.fieldHeight = fieldHeight;
-    this.y = fieldHeight / 2;
+    this.y = (fieldHeight - racketHeight)  / 2;
+    this.player = player;
   }
 
   public void move(RacketAction racketAction) {
@@ -52,18 +61,18 @@ public class Racket {
   }
 
   public int borderRightX() {
-    return x + racketWidth / 2;
+    return x + racketWidth;
   }
 
   public int borderLeftX() {
-    return x - racketWidth / 2;
+    return x;
   }
 
   public int borderTopY() {
-    return y + racketHeight / 2;
+    return y;
   }
 
   public int borderBottomY() {
-    return y - racketHeight / 2;
+    return y + racketHeight;
   }
 }
