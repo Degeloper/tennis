@@ -1,6 +1,5 @@
 package ch.css.coaching.web;
 
-import ch.css.coaching.Ball;
 import ch.css.coaching.Field;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,14 +28,21 @@ public class WebSocketGame {
     Racket racket = field.newRacket();
     playerSession.addMessageHandler(new RacketHandler(racket));
     playerSessions.add(playerSession);
-    startGame();
-
+    if (playerSessions.size() == 2)
+      startGame();
   }
 
   void startGame() {
     Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
+    timer.schedule(runnableGame(), 0, 10);
+  }
+
+  private TimerTask runnableGame() {
+    return new TimerTask() {
       public void run() {
+        if(field.ballIsOutside()){
+          field.initBall();
+        }
         field.moveBall();
         playerSessions.forEach(s -> {
           try {
@@ -46,7 +52,7 @@ public class WebSocketGame {
           }
         });
       }
-    }, 0, 10);
+    };
   }
 
   private String toJson(Field field) {

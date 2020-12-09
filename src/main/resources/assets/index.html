@@ -35,12 +35,10 @@
     drawRacket(field.rackets[1])
   }
   function keyDownHandler(e) {
-    if(e.key == "Down" || e.key == "ArrowDown") {
+    if(e.key == "Down" || e.key == "ArrowDown")
       websocket.send("DOWN");
-    }
-    else if(e.key == "Up" || e.key == "ArrowUp") {
+    else if(e.key == "Up" || e.key == "ArrowUp")
       websocket.send("UP")
-    }
   }
 
   function drawBall(ball) {

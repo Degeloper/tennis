@@ -5,7 +5,7 @@ import ch.css.coaching.web.Racket;
 public class Ball {
   private int x;
   private int y;
-  private final int radius;
+  private final int radius = 10;
 
   public int getX() {
     return x;
@@ -19,14 +19,14 @@ public class Ball {
     return radius;
   }
 
-  public Ball(int x, int y, int radius) {
+  public Ball(int x, int y) {
     this.x = x;
     this.y = y;
-    this.radius = radius;
   }
 
-  public boolean collideWithBorders(int borderHeight, int deltaY) {
-    return y + deltaY > borderHeight-radius || y + deltaY < radius;
+  public boolean collidesWithBorders(int borderHeight, int deltaY) {
+    return y + deltaY > borderHeight - radius ||
+      y + deltaY < radius;
   }
 
   public void move(int deltaX, int deltaY) {
@@ -35,9 +35,9 @@ public class Ball {
   }
 
   public boolean collideWithRacket(Racket racket, int dx, int dy) {
-    return x + dx <= racket.borderRightX() &&
-      x + dx >= racket.borderLeftX() &&
-      y + dy <= racket.borderTopY() &&
-      y + dy >= racket.borderBottomY();
+    return x + dx - radius <= racket.borderRightX() &&
+      x + dx + radius >= racket.borderLeftX() &&
+      y + dy - radius <= racket.borderTopY() &&
+      y + dy + radius >= racket.borderBottomY();
   }
 }
