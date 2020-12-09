@@ -1,6 +1,6 @@
-package ch.css.coaching.scoring;
+package ch.css.coaching.game.score;
 
-import static ch.css.coaching.scoring.Score.*;
+import static ch.css.coaching.game.score.Score.*;
 
 public class Player {
 

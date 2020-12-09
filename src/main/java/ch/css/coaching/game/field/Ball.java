@@ -1,4 +1,4 @@
-package ch.css.coaching.playground;
+package ch.css.coaching.game.field;
 
 public class Ball {
   private int x;

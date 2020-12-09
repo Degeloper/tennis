@@ -1,12 +1,12 @@
 package ch.css.coaching;
 
-import ch.css.coaching.scoring.Scorer;
-import ch.css.coaching.scoring.Player;
+import ch.css.coaching.game.score.Scorer;
+import ch.css.coaching.game.score.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static ch.css.coaching.scoring.Score.ADVANTAGE;
-import static ch.css.coaching.scoring.Score.FORTY;
+import static ch.css.coaching.game.score.Score.ADVANTAGE;
+import static ch.css.coaching.game.score.Score.FORTY;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class ScorerTest {

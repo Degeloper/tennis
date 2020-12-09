@@ -1,4 +1,4 @@
-package ch.css.coaching.scoring;
+package ch.css.coaching.game.score;
 
 public enum Score {
   LOVE(0) {
@@ -31,9 +31,5 @@ public enum Score {
 
   public Score previous() {
     return values()[ordinal() - 1];
-  }
-
-  public int getValue() {
-    return value;
   }
 }

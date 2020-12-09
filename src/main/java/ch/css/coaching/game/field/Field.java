@@ -1,6 +1,6 @@
-package ch.css.coaching.playground;
+package ch.css.coaching.game.field;
 
-import ch.css.coaching.scoring.Player;
+import ch.css.coaching.game.score.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Field {
 
   private final int height;
   private final int width;
-  private int dx = -2;
+  private int dx = 2;
   private int dy = -2;
 
   private Ball ball;
@@ -21,10 +21,11 @@ public class Field {
   public Field(int width, int height) {
     this.width = width;
     this.height = height;
-    initBall();
+    resetBall();
   }
 
-  public void initBall() {
+  public void resetBall() {
+    dx = -dx;
     this.ball = new Ball(width / 2, height / 2);
   }
 
@@ -33,8 +34,33 @@ public class Field {
     ball.move(dx, dy);
   }
 
+  public List<Racket> getRackets() {
+    return rackets;
+  }
+
   public Ball getBall() {
     return ball;
+  }
+
+  public Racket newRacket(Player player) {
+    int x = 0;
+    if (rackets.size() == 1)
+      x = width - 10;
+    Racket newRacket = new Racket(x, height, player);
+    rackets.add(newRacket);
+    return newRacket;
+  }
+
+  public Optional<Racket> racketThatMissedTheBall() {
+    if (ball.getX() < 0)
+      return rackets.stream().min(comparingInt(Racket::getX));
+    if (ball.getX() > width)
+      return rackets.stream().max(comparingInt(Racket::getX));
+    return Optional.empty();
+  }
+
+  public void resetRackets() {
+    rackets.clear();
   }
 
   private void checkCollisions() {
@@ -47,30 +73,5 @@ public class Field {
   private boolean ballCollidesWithAnyRacket() {
     return rackets.stream()
       .anyMatch(r -> ball.collidesWithRacket(r, dx, dy));
-  }
-
-  public Racket newRacket(Player player) {
-    int x = 0;
-    if (rackets.size() == 1)
-      x = width - 10;
-    Racket newRacket = new Racket(x, height, player);
-    rackets.add(newRacket);
-    return newRacket;
-  }
-
-  public List<Racket> getRackets() {
-    return rackets;
-  }
-
-  public Optional<Racket> missedRacket() {
-    if (ball.getX() < 0)
-      return rackets.stream().min(comparingInt(Racket::getX));
-    if (ball.getX() > width)
-      return rackets.stream().max(comparingInt(Racket::getX));
-    return Optional.empty();
-  }
-
-  public void resetRackets() {
-    rackets.clear();
   }
 }

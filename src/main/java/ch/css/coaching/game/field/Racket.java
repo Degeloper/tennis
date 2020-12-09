@@ -1,9 +1,9 @@
-package ch.css.coaching.playground;
+package ch.css.coaching.game.field;
 
-import ch.css.coaching.scoring.Player;
+import ch.css.coaching.game.score.Player;
 
-import static ch.css.coaching.playground.RacketAction.DOWN;
-import static ch.css.coaching.playground.RacketAction.UP;
+import static ch.css.coaching.game.field.RacketAction.DOWN;
+import static ch.css.coaching.game.field.RacketAction.UP;
 
 public class Racket {
 

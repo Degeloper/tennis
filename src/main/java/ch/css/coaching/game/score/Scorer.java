@@ -1,11 +1,11 @@
-package ch.css.coaching.scoring;
+package ch.css.coaching.game.score;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ch.css.coaching.scoring.Score.ADVANTAGE;
-import static ch.css.coaching.scoring.Score.FORTY;
+import static ch.css.coaching.game.score.Score.ADVANTAGE;
+import static ch.css.coaching.game.score.Score.FORTY;
 
 public class Scorer {
 

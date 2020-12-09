@@ -1,7 +1,7 @@
 package ch.css.coaching.web;
 
-import ch.css.coaching.playground.Racket;
-import ch.css.coaching.playground.RacketAction;
+import ch.css.coaching.game.field.Racket;
+import ch.css.coaching.game.field.RacketAction;
 
 import javax.websocket.MessageHandler;
 

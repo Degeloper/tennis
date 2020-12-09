@@ -1,79 +1,48 @@
 package ch.css.coaching.web;
 
-import ch.css.coaching.playground.Field;
-import ch.css.coaching.playground.Game;
-import ch.css.coaching.playground.Racket;
-import ch.css.coaching.scoring.Player;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import ch.css.coaching.game.Game;
+import ch.css.coaching.game.field.Field;
+import ch.css.coaching.game.field.Racket;
+import ch.css.coaching.game.score.Player;
 
 import javax.websocket.CloseReason;
 import javax.websocket.Endpoint;
 import javax.websocket.EndpointConfig;
 import javax.websocket.Session;
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static javax.websocket.CloseReason.CloseCodes.NORMAL_CLOSURE;
 
 public class GameEndpoint extends Endpoint {
 
-  private static final Logger LOGGER = Logger.getLogger(GameEndpoint.class.getName());
-
-  private static final Game game = new Game();
-  private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+  private static final Game game = new Game(new Field(480, 320));
+  private final ScheduledExecutorService gameScheduler = Executors.newScheduledThreadPool(1);
 
   @Override
   public void onOpen(Session session, EndpointConfig config) {
     Player newPlayer = new Player();
-    Racket racket = game.newRacketFor(newPlayer);
-    session.addMessageHandler(new RacketHandler(racket));
-    game.subscribeFieldUpdate(field -> {
-      try {
-        session.getBasicRemote().sendText(toJson(field));
-      } catch (IOException e) {
-        LOGGER.log(Level.SEVERE, e.getMessage());
-      }
-    });
-    game.subscribeWinnerUpdate(winner -> {
-        try {
-          if (newPlayer == winner)
-            session.close(new CloseReason(NORMAL_CLOSURE, "YOU WON!"));
-          else
-            session.close(new CloseReason(NORMAL_CLOSURE, "YOU LOST!"));
-        } catch (IOException e) {
-          LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-      }
-    );
+    game.subscribeToGameEvents(new GameEventsHandler(session, newPlayer));
+    addRacketHandlerToSession(session, newPlayer);
 
     if (game.isReady()) {
-      scheduler.scheduleAtFixedRate(game, 0, 10, MILLISECONDS);
+      gameScheduler.scheduleAtFixedRate(game, 0, 12, MILLISECONDS);
     }
   }
 
   @Override
   public void onClose(Session session, CloseReason closeReason) {
-    scheduler.shutdown();
+    gameScheduler.shutdown();
   }
 
   @Override
   public void onError(Session session, Throwable thr) {
-    scheduler.shutdown();
+    gameScheduler.shutdown();
   }
 
-  private String toJson(Field field) {
-    try {
-      return new ObjectMapper().writeValueAsString(field);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      return "{}";
-    }
-
+  private void addRacketHandlerToSession(Session session, Player newPlayer) {
+    Racket racket = game.newRacketFor(newPlayer);
+    session.addMessageHandler(new RacketHandler(racket));
   }
 
 }
