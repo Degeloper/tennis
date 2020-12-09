@@ -1,32 +1,39 @@
 package ch.css.coaching;
 
-import ch.css.coaching.scoring.GameScore;
+import ch.css.coaching.scoring.Scorer;
 import ch.css.coaching.scoring.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static ch.css.coaching.scoring.Score.ADVANTAGE;
 import static ch.css.coaching.scoring.Score.FORTY;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-class GameScoreTest {
+class ScorerTest {
 
   private final Player player1 = new Player();
   private final Player player2 = new Player();
-  private final GameScore gameScore = new GameScore(player1, player2);
+  private Scorer scorer;
 
+  @BeforeEach
+  void setUp() {
+    scorer = new Scorer();
+    scorer.addPlayer(player1);
+    scorer.addPlayer(player2);
+  }
 
   @Test
   void initialState_noWinner() {
-    assertThat(gameScore.winner()).isEmpty();
+    assertThat(scorer.winner()).isEmpty();
   }
 
   @Test
   void player1ScoreIsForty_player1Scores_player1IsWinner() {
     player1.setScore(FORTY);
 
-    gameScore.scoreBall(player1);
+    scorer.scoreBall(player1);
 
-    assertThat(gameScore.winner()).contains(player1);
+    assertThat(scorer.winner()).contains(player1);
   }
 
   @Test
@@ -34,7 +41,7 @@ class GameScoreTest {
     player1.setScore(FORTY);
     player2.setScore(FORTY);
 
-    assertThat(gameScore.isDeuce()).isTrue();
+    assertThat(scorer.isDeuce()).isTrue();
   }
 
   @Test
@@ -42,10 +49,10 @@ class GameScoreTest {
     player1.setScore(FORTY);
     player2.setScore(FORTY);
 
-    gameScore.scoreBall(player1);
+    scorer.scoreBall(player1);
 
     assertThat(player1.score()).isEqualTo(ADVANTAGE);
-    assertThat(gameScore.winner()).isEmpty();
+    assertThat(scorer.winner()).isEmpty();
   }
 
   @Test
@@ -53,7 +60,7 @@ class GameScoreTest {
     player2.setScore(ADVANTAGE);
     player1.setScore(FORTY);
 
-    gameScore.scoreBall(player1);
+    scorer.scoreBall(player1);
 
     assertThat(player1.score()).isEqualTo(FORTY);
     assertThat(player2.score()).isEqualTo(FORTY);

@@ -1,21 +1,16 @@
 package ch.css.coaching.scoring;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static ch.css.coaching.scoring.Score.ADVANTAGE;
 import static ch.css.coaching.scoring.Score.FORTY;
 
-public class GameScore {
+public class Scorer {
 
   private final List<Player> players = new ArrayList<>();
   private Player winner;
-
-  public GameScore(Player... players) {
-    this.players.addAll(Arrays.asList(players));
-  }
 
   public Optional<Player> winner() {
     return Optional.ofNullable(winner);
@@ -44,4 +39,12 @@ public class GameScore {
       .orElseThrow(IllegalStateException::new);
   }
 
+  public void addPlayer(Player newPlayer) {
+    players.add(newPlayer);
+  }
+
+  public void resetPlayers() {
+    winner = null;
+    players.clear();
+  }
 }
