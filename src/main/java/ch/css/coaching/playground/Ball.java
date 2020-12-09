@@ -1,6 +1,4 @@
-package ch.css.coaching;
-
-import ch.css.coaching.web.Racket;
+package ch.css.coaching.playground;
 
 public class Ball {
   private int x;

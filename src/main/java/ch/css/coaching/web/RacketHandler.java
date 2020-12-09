@@ -1,5 +1,8 @@
 package ch.css.coaching.web;
 
+import ch.css.coaching.playground.Racket;
+import ch.css.coaching.playground.RacketAction;
+
 import javax.websocket.MessageHandler;
 
 public class RacketHandler implements MessageHandler.Partial<String> {

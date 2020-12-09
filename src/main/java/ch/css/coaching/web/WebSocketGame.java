@@ -1,6 +1,7 @@
 package ch.css.coaching.web;
 
-import ch.css.coaching.Field;
+import ch.css.coaching.playground.Field;
+import ch.css.coaching.playground.Racket;
 import ch.css.coaching.scoring.GameScore;
 import ch.css.coaching.scoring.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;

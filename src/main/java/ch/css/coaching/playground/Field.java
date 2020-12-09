@@ -1,7 +1,6 @@
-package ch.css.coaching;
+package ch.css.coaching.playground;
 
 import ch.css.coaching.scoring.Player;
-import ch.css.coaching.web.Racket;
 
 import java.util.ArrayList;
 import java.util.List;

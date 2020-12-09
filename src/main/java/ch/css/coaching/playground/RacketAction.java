@@ -1,4 +1,4 @@
-package ch.css.coaching.web;
+package ch.css.coaching.playground;
 
 public enum RacketAction {
   UP, DOWN

@@ -10,7 +10,6 @@ public class GameEndpoint extends Endpoint {
 
   @Override
   public void onOpen(Session session, EndpointConfig config) {
-
     webSocketGame.addPlayerSession(session);
   }
 
