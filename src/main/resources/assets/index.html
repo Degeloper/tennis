@@ -13,27 +13,21 @@
 </head>
 <body>
 <canvas id="field" width="480" height="320"></canvas>
-<div id="ballX">-</div>
-<div id="ballY">-</div>
 <script>
+  document.addEventListener("keydown", keyDownHandler, false);
   var canvas = document.getElementById("field");
   var ctx = canvas.getContext("2d");
-
-  document.addEventListener("keydown", keyDownHandler, false);
+  var racketColors = ["#0095DD", "#ff3d41"]
 
   let websocket = new WebSocket("ws://" + window.location.host + "/");
-  websocket.onopen = function (e) {
-  }
 
   websocket.onmessage = function (e) {
     let field = JSON.parse(e.data);
-    document.getElementById("ballX").innerHTML = field.ball.x;
-    document.getElementById("ballY").innerHTML = field.ball.y;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall(field.ball);
-    drawRacket(field.rackets[0])
-    drawRacket(field.rackets[1])
+    field.rackets.forEach(drawRacket)
   }
+
   function keyDownHandler(e) {
     if(e.key == "Down" || e.key == "ArrowDown")
       websocket.send("DOWN");
@@ -49,10 +43,10 @@
     ctx.closePath();
   }
 
-  function drawRacket(racket) {
+  function drawRacket(racket, index) {
     ctx.beginPath();
     ctx.rect(racket.x, racket.y, racket.width, racket.height);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = racketColors[index];
     ctx.fill();
     ctx.closePath();
   }
