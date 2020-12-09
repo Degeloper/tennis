@@ -2,6 +2,9 @@ package ch.css.coaching;
 
 import ch.css.coaching.web.Racket;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Field {
 
   private final int height;
@@ -10,19 +13,13 @@ public class Field {
   private int dy = -2;
   private final int ballRadius = 10;
 
-  private Ball ball;
-  private Racket racket;
+  private final Ball ball;
+  private final List<Racket> rackets = new ArrayList<>();
 
   public Field(int width, int height) {
     this.width = width;
     this.height = height;
-    initBall();
-  }
-
-  private void initBall() {
-    int middleX = width / 2;
-    int middleY = height / 2;
-    ball = new Ball(middleX, middleY, ballRadius);
+    this.ball = new Ball(width / 2, height / 2, ballRadius);
   }
 
   public void moveBall() {
@@ -35,18 +32,23 @@ public class Field {
   }
 
   private void checkCollitions() {
-    if(ball.collideWithBorders(height, dy))
+    if (ball.collideWithBorders(height, dy))
       dy = -dy;
-    if(ball.collideWithRacket(racket, dx, dy))
+    if (rackets.stream().anyMatch(r -> ball.collideWithRacket(r, dx, dy)))
       dx = -dx;
   }
 
   public Racket newRacket() {
-    racket = new Racket(0, height);
-    return racket;
+    int x = 0;
+    if (rackets.size() == 1) {
+      x = width - 10;
+    }
+    Racket newRacket = new Racket(x, height);
+    rackets.add(newRacket);
+    return newRacket;
   }
 
-  public Racket getRacket() {
-    return racket;
+  public List<Racket> getRackets() {
+    return rackets;
   }
 }

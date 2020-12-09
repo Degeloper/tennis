@@ -37,7 +37,6 @@ public class WebSocketGame {
     Timer timer = new Timer();
     timer.schedule(new TimerTask() {
       public void run() {
-
         field.moveBall();
         playerSessions.forEach(s -> {
           try {

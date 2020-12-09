@@ -7,7 +7,6 @@ public class Ball {
   private int y;
   private final int radius;
 
-
   public int getX() {
     return x;
   }

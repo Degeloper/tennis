@@ -31,7 +31,8 @@
     document.getElementById("ballY").innerHTML = field.ball.y;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall(field.ball);
-    drawRacket(field.racket)
+    drawRacket(field.rackets[0])
+    drawRacket(field.rackets[1])
   }
   function keyDownHandler(e) {
     if(e.key == "Down" || e.key == "ArrowDown") {
