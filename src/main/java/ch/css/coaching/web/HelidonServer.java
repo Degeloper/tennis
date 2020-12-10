@@ -11,8 +11,9 @@ import io.helidon.webserver.WebServer;
 import io.helidon.webserver.tyrus.TyrusSupport;
 
 import javax.websocket.server.ServerEndpointConfig;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.logging.Level.SEVERE;
 
 public class HelidonServer {
 
@@ -40,7 +41,7 @@ public class HelidonServer {
   }
 
   public static void start() {
-    // By default this will pick up application.yaml from the classpath
+    // Config at ./application.yaml
     Config config = Config.create();
 
     WebServer server = WebServer.builder(createRouting())
@@ -55,7 +56,7 @@ public class HelidonServer {
           -> LOGGER.info("Web server is DOWN. Good bye!"));
       })
       .exceptionally(t -> {
-        LOGGER.log(Level.SEVERE, "Startup failed: ", t);
+        LOGGER.log(SEVERE, "Startup failed: ", t);
         return null;
       });
   }

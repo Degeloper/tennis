@@ -31,7 +31,7 @@ public class GameEventsHandler implements GameEvents {
     try {
       session.getBasicRemote().sendText(toJson(field));
     } catch (IOException e) {
-      LOGGER.log(SEVERE, e.getMessage());
+      LOGGER.log(SEVERE, "Update fields failed", e);
     }
   }
 
@@ -43,7 +43,7 @@ public class GameEventsHandler implements GameEvents {
       else
         session.close(new CloseReason(NORMAL_CLOSURE, "YOU LOST!"));
     } catch (IOException e) {
-      LOGGER.log(SEVERE, e.getMessage());
+      LOGGER.log(SEVERE, "Close session failed", e);
     }
   }
 
