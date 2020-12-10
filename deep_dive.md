@@ -11,24 +11,24 @@
 ## Messaging
 
 In der OO-Programmierung ging es dem Erfinder Alan Kay primär nicht darum, die Welt möglichst realitätsnahe in Klassen zu unterteilen.
-Viel wichtiger ist, wie Instanzen von Klassen mit den anderen Objekten interagieren sollen.
+Viel wichtiger ist das Augenmerk darauf zu richten, wie Objekte miteinander interagieren.
 
-In der OO-Entwicklung kommt es häufig vor, dass zwar die Domäne sauber in Klassen ausgelagert wird, 
-diese aber in Getter Datentöpfe ausufern. Dies ist oft ein Zeichen für schlechte Encapsulation. Die Objekte 
-sind dann seelenlose Datenträger oft mit Beschreibungen wie DTOs oder POJOs gerechtfertigt.
-Sie enthalten kein Behaviour und tragen die innere Struktur der Klasse nach Aussen, indem sie diese mit Getter Klassen
-beleuchten (siehe auch "Living Objects").
+In der OO-Entwicklung kommt es häufig vor, dass zwar die Domäne sauber in Klassen abgebildet wird, 
+diese dann aber dumme Datentöpfe sind. Die Objekte sind dann seelenlose Datenträger und zur Rechtfertigung als DTOs oder POJOs betitelt.
+Sie enthalten kein Behaviour und tragen die innere Struktur der Klasse nach Aussen, indem sie diese mit Getter Methoden
+beleuchten (siehe auch "Living Objects"):
 
-[TODO: Beispiel]
+Ein hilfreiches Konzept um solche Klassen zu vermeiden ist [Tell don't ask (Martin Fowler)][1].
 
-Ein hilfreiches Konzept um solche Klassen zu vermeiden ist "Tell don't ask".
-Hier get es darum sich vorzustellen, wie die Objekte miteinander interagieren sollen.
-Die öffentlichen Methoden einer Klasse sollen anderen Objekten aufzeigen, wie damit interagiert werden kann.
-Wenn z.B. ObjektA eine Methode von ObjektB aufruft, schickt er ihm eine Nachricht (Message). 
-Die Nachricht soll dem Empfänger möglichst konkret sagen, was zu tun ist (Tell). 
-Die Nachricht, die an den Aufrufer zurückgeschickt wird, soll ihn nicht zum Nachfragen bewegen (Don't Ask).
-Oftmals ist dies schwierig umzusetzen. Jedoch kann das häufige Antreffen von Methodennamen wie `getDataA()` und `isReady()` als 
-Code-Smell und ungünstiges Klassendesign verstanden werden.
+Die öffentlichen Methoden einer Klasse sollen anderen Objekten aufzeigen, wie damit interagiert werden kann (API).
+Wenn z.B. Objekt A eine Methode von Objekt B aufruft, schickt er ihm eine Nachricht (Message). 
+Die Nachricht soll dem Empfänger möglichst konkret sagen, was zu tun ist (tell!). 
+Die Nachricht, die an den Aufrufer zurückgeschickt wird, soll ihn nicht zum Nachfragen animieren (don't ask!).
+
+![](images/TellDontAsk.png)
+
+Quelle: https://martinfowler.com/bliki/TellDontAsk.html
+
 
 ## Living Objects
 
@@ -43,58 +43,135 @@ weil sie dadurch Instanzvariablen vermeiden.
 Damit ein Objekt ein Verhalten haben kann, braucht es Daten um den Zustand speichern zu können. 
 Diese Daten sollen intern in Form von Instanzvariablen gespeichert werden. Dadurch entsteht eine interne Struktur, 
 welche es gegen Aussen so gut wie möglich zu verbergen gilt (Information Hiding). 
-Die bereits erwähnten Getter-Methoden machen dabei das pure Gegenteil. Sie verhindern zwar den direkt Zugriff der Daten, 
+Die bereits erwähnten Getter-Methoden machen dabei das pure Gegenteil. Sie verhindern zwar den direkten Zugriff der Daten, 
 jedoch geht es bei Information Hiding weniger um das Verstecken von Daten als vielmehr um das Verstecken von 
-Design Entscheide (Strukturen) innerhalb einer Klasse[1].
+Design Entscheide (Strukturen) innerhalb einer Klasse ([Protected Variation, Craig Larman][2]).
 
 ## 4 Rules of Simple Design
-Das Design einer Software kann dann als Simple verstanden werden, wenn der Source-Code folgende 4 Regeln einhält:
+Das Design einer Software wird dann als simpel verstanden, wenn der Source-Code alle folgende 4 Regeln einhält:
 
-1. Tests sind grün
-2. Duplikationen sind minimiert
-3. Absichten werden offenbart
-4. Anzahl Klassen/Module/Packages sind minimiert
+1. passes its tests
+2. minimises duplication
+3. reveals its intent
+4. has fewer classes/modules/packages
 
-Von diesen 4 Regeln gibt es aber 2 Regeln, welchen besondere Beachtung geschenkt werden sollte. Gemeint sind die Regeln 2. und 3.
-In der Theorie führt nämlich die Erfüllung von "Duplikationen sind minimiert" und "Absichten werden offenbart" automatisch
-zu grünen Tests und minimierte Anzahl Klassen. 
-Theoretisch könnte simples Design auch ohne das Schreiben eines einzelnen Tests erreicht werden.
-Durch Methoden wie Test Driven Design (TDD) kommt es ohnehin automatisch zu UnitTests. 
-Die Tests können auch als Beweis dafür verstanden werden, dass der Code gut strukturiert, einfach Testbar und somit
-simple designt ist. 
+Besonders den 2. und 3. Regel sollte besondere Beachtung geschenkt werden. 
+In der Theorie führt die Erfüllung der Disziplinen "minimize duplication" und "reveal its intent" automatisch
+zu minimierter Anzahl von Klassen/Modulen/Packages. 
+
+Methoden wie Test Driven Design (TDD) führen dazu, dass automatisch grüne Unit Test entstehen. 
+Die Unit Tests können auch als Beweis dafür verstanden werden, dass der Code einfach testbar und somit auch
+simpel designt ist.
+
+Einer der schwersten (wenn nicht die schwerste) Disziplin im Alltag eines Entwicklers ist die adäquate Vergabe von Namen.
+Vor allem für die Einhaltung der 3. Regel verbirgt sich darin die grösste Herausforderung. Oft fehlt es einem schwer, 
+Dinge wie Klassen, Methoden oder Variablen sinnvoll zu benennen. 
+Und oftmals liegt das Problem ganz einfach darin, dass das zu benennende Ding mehrere Verantwortlichkeiten besitzt (SRP).
+Im Laufe des Refactoringprozesses wird eine Methode/Klasse/Variable mehrfach umbenannt und durchläuft meist folgende Stadien:   
+
+1. nonsense
+2. accurate-but-vague
+3. precise
+4. meaningful/intention-revealing
+
+Für Stadium 1 kann ein Platzhalter wie `foo()` genommen werden. Dieser dient lediglich zur erfolgreichen Kompilierung.
+In Stadium 4 ist die optimale Abstraction erreicht. Die Intention der Variable/Methode/Klasse ist mithilfe des Namens
+selbsterklärend. 
+Wichtig ist auch die Beachtung der Länge bei der Namensgebung (siehe auch "Software Aesthetics"). 
 
 ## IOSP
 
-Die Abkürzung IOSP steht für Integration Operation Segregation Principle.
-Wie der Name schon vermuten lässt, ist das Ziel einzelne Units in 2 Kategorien zu separieren:
+Das Integration Operation Segregation Principle (IOSP) wurde von Ralf Westphal erfunden.
+Das Prinzip separiert Code in einzelne Units und kategorisiert diese:
 
 - Operational Units
   - Enthält Business Logic
   - Ist idempotent
-  - darf keine keine Integration Units aufrufen
-  - Ist immer der Leaf Node
+  - Darf keine Integration Units aufrufen  
   - Bekommt die Daten Injected
+  - Ist immer der Leaf Node
 - Integration Units
   - Enthält Daten
-  - Gibt die Daten an Operational Units weiter
-  - Operational Units auf
-  - kann andere Integration Units aufrufen
- 
-[TODO: Beispiel]
+  - Gibt die Daten an Operational Units weiter  
+  - Kann andere Integration Units aufrufen
 
+Das primäre Ziel ist dabei die Testbarkeit und Lesbarkeit zu erhöhen.
+IOSP geht Hand in Hand mit TDD.
+
+Durch die Einhaltung der obigen Regeln entsteht eine Baumstruktur:
+
+### IOSP Baumstruktur
+![](images/IOSP.png)
+
+### Beispiel
+```
+public void scoreBall(Player scoringPlayer) {              //Methode von Integration Unit    
+    Player opponent = opponentOf(scoringPlayer);           //Operationsmethode für Selektion
+    if (scoringPlayer.hasMatchball(opponent.getScore()))   //Operationsmethode mit Injection von Daten
+      winner = scoringPlayer;                              //Datenhaltung innerhalb der Integration Unit
+    ...
+}
+```
 
 ## Software Dimension
 
-Dimensionen werden horizontal und vertikal gemessen.
-Horizontal wird die Einrückungstiefe (Konzept von Adam Thornhill) betrachtet und vertikal die Anzahl der Zeilen. 
+Dimensionen von Software können horizontal und vertikal gemessen werden.
+
+### Horizontale Metrik
+Die maximale Einrückungstiefe ist eine einfache aber effektive Metrik wie die horizontale Komplexität 
+ermittelt werden kann ([Your Code as a Crime Scene, Adam Tornhill][3]).
+Die Einrückungstiefe hat dabei direkten Einfluss auf die Symmetrie der Software (siehe "Software Aesthetics").
+
+### Vertikale Metrik
+Eine hohe vertikale Komplexität von Source Code bedeutet zu viele Anzahl Zeilen in einer Klasse und letztendlich 
+ein Verstoss gegen das Single Responsibility Pattern (SRP).
+
 
 # Design-Mindset
-
 ## Software Aesthetics
-Das Konzept der Symmetrie wird beginnend von kleinsten Einheiten genutzt
+
+Software Aesthetics beschäftigt sich mit der allgemeinen Symmetrie von Source Code.
+Es geht darum sich Fragen zu stellen wie:
 
 - Anzahl der Tests ausgleichend zur Anzahl der produktiven Methoden?
-- Hält sich im Umfeld der Funktionen, die vertikale mit der horizontalen Dimension? 
+- Verhältnis von vertikale mit der horizontalen Dimension im Gleichgewicht? 
 - Ist die Größe der vorhandenen Klassen ähnlich oder gibt es Gott-Klassen?
-- Wann muss ich dieses Design etwas aufweichen (Asymmetrie) um ein besseres Ergebnis zu erreichen? 
-- Wie ist die Balance der Struktur Organisation Informations-Flow?
+- Wann muss ich dieses Design etwas aufweichen (Asymmetrie) um ein besseres Ergebnis zu erreichen?
+- Verhältnis von Imports zu Anzahl Zeilen
+- Verhältnis von externen zu internen Dependencies
+
+### Symmetrie
+Ein wichtiger Aspekt in der Symmetrie ist Länge von Methodennamen.
+Generell gilt für die Namensgebung: 
+Je grösser der Scope (Sichtbarkeit) einer Methode/Klasse/Variable, desto kürzer sollte der Name sein: 
+
+![](images/Namensgebung.png)
+ 
+### Beispiel
+```
+
+public void run() {                                                       //Grosser Scope (public): Name kurz und prägnant
+    if (scorer.winner().isPresent())
+      electWinnerAndResetGame(scorer.winner().get());
+
+    Optional<Racket> missedRacket = field.racketThatMissedTheBall();
+    if (missedRacket.isPresent())
+      givePointToOpponentAndResetBall(missedRacket.get().getPlayer());    //Kleiner Scope (private): Name lang und detailliert
+    else
+      field.moveBall();
+            
+    updateFields();
+}
+```
+
+Durch die Einhaltung der Namensgebungsregel bekommt der obere Code-Block die Form eines `>`, was nicht unüblich und 
+generell als ästetisch und gut lesbar wahrgenommen wird.
+
+Eine einfache und schnelle Methode den Source Code auf Lesbarkeit zu prüfen ist der "Squint Test":
+Durch das Zusammenkneifen der Augen wird die Struktur des eigenen Source Code objektiv wahrnehmbar.
+Ungewohnte Formen können dann auf zu tief verschachtelte `if` Statements und häufige Farbwechsel
+auf zu komplexen Abstraktionen hindeuten (gute IDE vorausgesetzt).
+
+[1]: https://martinfowler.com/bliki/TellDontAsk.html
+[2]: https://martinfowler.com/ieeeSoftware/protectedVariation.pdf
+[3]: https://www.simpleorientedarchitecture.com/book-review-your-code-as-a-crime-scene/

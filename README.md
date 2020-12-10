@@ -34,8 +34,7 @@ https://codingdojo.org/kata/Tennis/
 
 ### Message Data Flow
 
-
-### Mit TDD entwickelte Packages
+### TDD entwickelte Klassen
 Alle Klassen in folgendem Package wurde mithilfe von TDD entwickelt:
 `ch.css.coaching.game.score`
 

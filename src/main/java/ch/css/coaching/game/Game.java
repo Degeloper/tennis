@@ -31,7 +31,7 @@ public class Game extends TimerTask {
     else
       field.moveBall();
 
-    gameEventsConsumers.forEach(c -> c.updateField(field));
+    updateField();
   }
 
   public void subscribeToGameEvents(GameEvents gameEventConsumer) {
@@ -45,6 +45,10 @@ public class Game extends TimerTask {
 
   public boolean isReady() {
     return gameEventsConsumers.size() == 2;
+  }
+
+  private void updateField() {
+    gameEventsConsumers.forEach(c -> c.updateField(field));
   }
 
   private void givePointToOpponentAndResetBall(Player player) {
