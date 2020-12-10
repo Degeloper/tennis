@@ -10,12 +10,11 @@ import static java.util.Comparator.comparingInt;
 
 public class Field {
 
-  private final int height;
-  private final int width;
   private int dx = 2;
   private int dy = -2;
-
   private Ball ball;
+  private final int height;
+  private final int width;
   private final List<Racket> rackets = new ArrayList<>();
 
   public Field(int width, int height) {

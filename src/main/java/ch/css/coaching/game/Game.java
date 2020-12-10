@@ -12,8 +12,8 @@ import java.util.TimerTask;
 
 public class Game extends TimerTask {
 
-  private final Scorer scorer = new Scorer();
   private final Field field;
+  private final Scorer scorer = new Scorer();
   private final List<GameEvents> gameEventsConsumers = new ArrayList<>();
 
   public Game(Field field) {

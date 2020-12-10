@@ -4,15 +4,17 @@ import ch.css.coaching.game.score.Player;
 
 public class Racket {
 
+  private int y;
+  private final int x;
+  private final int deltaY = 7;
+
+  private final int fieldHeight;
+
   private final int racketHeight = 75;
   private final int racketWidth = 10;
 
   private final Player player;
 
-  private int y;
-  private final int x;
-  private final int deltaY = 7;
-  private final int fieldHeight;
   public int getY() {
     return y;
   }

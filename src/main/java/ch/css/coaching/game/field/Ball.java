@@ -1,9 +1,15 @@
 package ch.css.coaching.game.field;
 
 public class Ball {
+
   private int x;
   private int y;
   private final int radius = 10;
+
+  public Ball(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
 
   public int getX() {
     return x;
@@ -15,11 +21,6 @@ public class Ball {
 
   public int getRadius() {
     return radius;
-  }
-
-  public Ball(int x, int y) {
-    this.x = x;
-    this.y = y;
   }
 
   public boolean collidesWithBorders(int borderHeight, int deltaY) {
