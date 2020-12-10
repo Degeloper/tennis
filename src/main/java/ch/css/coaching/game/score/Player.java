@@ -20,12 +20,8 @@ public class Player {
     return score;
   }
 
-  public void setScore(Score score) {
+  void setScore(Score score) {
     this.score = score;
-  }
-
-  public Score score() {
-    return score;
   }
 
   public void increaseScore() {

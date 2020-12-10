@@ -18,9 +18,9 @@ public class Scorer {
 
   public void scoreBall(Player scoringPlayer) {
     Player opponent = opponentOf(scoringPlayer);
-    if (scoringPlayer.hasMatchball(opponent.score()))
+    if (scoringPlayer.hasMatchball(opponent.getScore()))
       winner = scoringPlayer;
-    else if (opponent.score() == ADVANTAGE)
+    else if (opponent.getScore() == ADVANTAGE)
       opponent.decreaseScore();
     else
       scoringPlayer.increaseScore();
@@ -29,7 +29,7 @@ public class Scorer {
 
   public boolean isDeuce() {
     return players.stream()
-      .allMatch(p -> p.score() == FORTY);
+      .allMatch(p -> p.getScore() == FORTY);
   }
 
   public Player opponentOf(Player player) {

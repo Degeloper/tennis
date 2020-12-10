@@ -1,12 +1,9 @@
-package ch.css.coaching;
+package ch.css.coaching.game.score;
 
-import ch.css.coaching.game.score.Player;
-import ch.css.coaching.game.score.Scorer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static ch.css.coaching.game.score.Score.ADVANTAGE;
-import static ch.css.coaching.game.score.Score.FORTY;
+import static ch.css.coaching.game.score.Score.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class ScorerTest {
@@ -24,22 +21,20 @@ class ScorerTest {
 
   @Test
   void acceptanceTest() {
-    //Player 1 scores until 40
     scorer.scoreBall(player1);
     scorer.scoreBall(player1);
     scorer.scoreBall(player1);
+    assertThat(player1.getScore()).isEqualTo(FORTY);
 
-    //Player 2 scores until 40
     scorer.scoreBall(player2);
     scorer.scoreBall(player2);
     scorer.scoreBall(player2);
     scorer.scoreBall(player2);
+    assertThat(player2.getScore()).isEqualTo(ADVANTAGE);
 
-    //Player 1 scores until wins
     scorer.scoreBall(player1);
     scorer.scoreBall(player1);
     scorer.scoreBall(player1);
-
     assertThat(scorer.winner()).contains(player1);
   }
 
@@ -72,7 +67,7 @@ class ScorerTest {
 
     scorer.scoreBall(player1);
 
-    assertThat(player1.score()).isEqualTo(ADVANTAGE);
+    assertThat(player1.getScore()).isEqualTo(ADVANTAGE);
     assertThat(scorer.winner()).isEmpty();
   }
 
@@ -83,9 +78,18 @@ class ScorerTest {
 
     scorer.scoreBall(player1);
 
-    assertThat(player1.score()).isEqualTo(FORTY);
-    assertThat(player2.score()).isEqualTo(FORTY);
+    assertThat(player1.getScore()).isEqualTo(FORTY);
+    assertThat(player2.getScore()).isEqualTo(FORTY);
   }
 
+  @Test
+  void player1Won_resetPlayers_winnerResets() {
+    player1.setScore(THIRTY);
+
+    scorer.scoreBall(player1);
+    scorer.resetPlayers();
+
+    assertThat(scorer.winner()).isEmpty();
+  }
 
 }
