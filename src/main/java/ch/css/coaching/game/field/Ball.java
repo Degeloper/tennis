@@ -24,8 +24,8 @@ public class Ball {
   }
 
   public boolean collidesWithBorders(int borderHeight, int deltaY) {
-    return y + deltaY > borderHeight - radius ||
-      y + deltaY < radius;
+    return collidesWithBorderTop(borderHeight, deltaY) ||
+      collidesWithBorderBottom(deltaY);
   }
 
   public void move(int deltaX, int deltaY) {
@@ -38,6 +38,14 @@ public class Ball {
       x + dx >= racket.borderLeftX() &&
       y + dy >= racket.borderTopY() &&
       y + dy <= racket.borderBottomY();
+  }
+
+  private boolean collidesWithBorderTop(int borderHeight, int deltaY) {
+    return y + deltaY > borderHeight - radius;
+  }
+
+  private boolean collidesWithBorderBottom(int deltaY) {
+    return y + deltaY < radius;
   }
 
 }
