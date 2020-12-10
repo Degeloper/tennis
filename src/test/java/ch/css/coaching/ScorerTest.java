@@ -1,7 +1,7 @@
 package ch.css.coaching;
 
-import ch.css.coaching.game.score.Scorer;
 import ch.css.coaching.game.score.Player;
+import ch.css.coaching.game.score.Scorer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +20,27 @@ class ScorerTest {
     scorer = new Scorer();
     scorer.addPlayer(player1);
     scorer.addPlayer(player2);
+  }
+
+  @Test
+  void acceptanceTest() {
+    //Player 1 scores until 40
+    scorer.scoreBall(player1);
+    scorer.scoreBall(player1);
+    scorer.scoreBall(player1);
+
+    //Player 2 scores until 40
+    scorer.scoreBall(player2);
+    scorer.scoreBall(player2);
+    scorer.scoreBall(player2);
+    scorer.scoreBall(player2);
+
+    //Player 1 scores until wins
+    scorer.scoreBall(player1);
+    scorer.scoreBall(player1);
+    scorer.scoreBall(player1);
+
+    assertThat(scorer.winner()).contains(player1);
   }
 
   @Test

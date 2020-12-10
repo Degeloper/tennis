@@ -30,12 +30,21 @@ https://codingdojo.org/kata/Tennis/
 - Helidon 2.0.2 (Webserver/Websockets)
 - JavaScript/CSS/HTML (Frontend)
 
-## ToDo's
+## Aktueller Stand
+
+### Message Data Flow
+
+
+### Mit TDD entwickelte Packages
+Package: ch.css.coaching.game.score
+
+### Offene Features
 - Automatisches Wiederverbinden nach Verbindungsunterbruch
 - Erweiterung von Scoring mit Spielen/Sätzen
 - Variation des Schwierigkeitsgrades (dynamische Beschleunigung des Balles)- 
 - Vergrösserung des Spielfelds
 - Responsive GUI (Handy/Tablet)
+
 
 ## Screenshots
 ### Warten auf Spieler 2
