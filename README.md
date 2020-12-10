@@ -1,7 +1,7 @@
 # Tennis Game
-Im Rahmen des Foundation Level Zertifikats der CSS Software Academy konnte eine selbst gewählte Programmieraufgabe 
-umgesetzt werden.
-Es soll ein Tennis Game erstellt werden mit folgender Coding Kata als Vorlage:
+Im Rahmen des Foundation Level Zertifikats der CSS Software Academy wurde eine selbst gewählte Programmieraufgabe 
+umgesetzt.
+Bei der Aufgabe handelt es sich um ein Tennis Game, welches folgende Coding Kata als Vorlage nimmt:
 https://codingdojo.org/kata/Tennis/
 
 ## Features
