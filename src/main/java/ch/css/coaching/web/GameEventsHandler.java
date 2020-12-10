@@ -1,7 +1,7 @@
 package ch.css.coaching.web;
 
-import ch.css.coaching.game.field.Field;
 import ch.css.coaching.game.GameEvents;
+import ch.css.coaching.game.field.Field;
 import ch.css.coaching.game.score.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,9 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.websocket.CloseReason;
 import javax.websocket.Session;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.util.logging.Level.SEVERE;
 import static javax.websocket.CloseReason.CloseCodes.NORMAL_CLOSURE;
 
 public class GameEventsHandler implements GameEvents {
@@ -31,7 +31,7 @@ public class GameEventsHandler implements GameEvents {
     try {
       session.getBasicRemote().sendText(toJson(field));
     } catch (IOException e) {
-      LOGGER.log(Level.SEVERE, e.getMessage());
+      LOGGER.log(SEVERE, e.getMessage());
     }
   }
 
@@ -43,17 +43,12 @@ public class GameEventsHandler implements GameEvents {
       else
         session.close(new CloseReason(NORMAL_CLOSURE, "YOU LOST!"));
     } catch (IOException e) {
-      LOGGER.log(Level.SEVERE, e.getMessage());
+      LOGGER.log(SEVERE, e.getMessage());
     }
   }
 
-  private String toJson(Field field) {
-    try {
-      return new ObjectMapper().writeValueAsString(field);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      return "{}";
-    }
+  private String toJson(Field field) throws JsonProcessingException {
+    return new ObjectMapper().writeValueAsString(field);
   }
 
 }

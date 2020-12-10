@@ -10,10 +10,10 @@
 
 ## Messaging
 
-In der OO-Programmierung ging es dem Erfinder Alan Kay primär nicht darum, die Welt möglichst realitätsnahe Klassen zu unterteilen.
-Viel wichtiger ist, wie Instanzen von Klassen (Objekte) mit den anderen Objekten interagieren sollen.
+In der OO-Programmierung ging es dem Erfinder Alan Kay primär nicht darum, die Welt möglichst realitätsnahe in Klassen zu unterteilen.
+Viel wichtiger ist, wie Instanzen von Klassen mit den anderen Objekten interagieren sollen.
 
-In der OO-Entwicklung z.B. in Java kommt es häufig vor, dass zwar die Domäne sauber in Klassen ausgelagert wird, 
+In der OO-Entwicklung kommt es häufig vor, dass zwar die Domäne sauber in Klassen ausgelagert wird, 
 diese aber in Getter Datentöpfe ausufern. Dies ist oft ein Zeichen für schlechte Encapsulation. Die Objekte 
 sind dann seelenlose Datenträger oft mit Beschreibungen wie DTOs oder POJOs gerechtfertigt.
 Sie enthalten kein Behaviour und tragen die innere Struktur der Klasse nach Aussen, indem sie diese mit Getter Klassen
@@ -24,28 +24,28 @@ beleuchten (siehe auch "Living Objects").
 Ein hilfreiches Konzept um solche Klassen zu vermeiden ist "Tell don't ask".
 Hier get es darum sich vorzustellen, wie die Objekte miteinander interagieren sollen.
 Die öffentlichen Methoden einer Klasse sollen anderen Objekten aufzeigen, wie damit interagiert werden kann.
-Wenn z.B. ObjektA eine Methode von ObjektB aufruft schickt er im eine Nachricht (Message). 
+Wenn z.B. ObjektA eine Methode von ObjektB aufruft, schickt er ihm eine Nachricht (Message). 
 Die Nachricht soll dem Empfänger möglichst konkret sagen, was zu tun ist (Tell). 
-Die Nachricht, die an den den Aufrufer zurückgeschickt wird, soll im nicht zum Nachfragen bewegen (Don't Ask).
-Oftmals ist dies schwierig umzusetzen. Jedoch kann ein sich Häuffen von solchen "getDataA()" und "isReady()" Methoden als 
-CodeSmell und ungünstiges Klassendesign verstanden werden.
+Die Nachricht, die an den Aufrufer zurückgeschickt wird, soll ihn nicht zum Nachfragen bewegen (Don't Ask).
+Oftmals ist dies schwierig umzusetzen. Jedoch kann das häufige Antreffen von Methodennamen wie `getDataA()` und `isReady()` als 
+Code-Smell und ungünstiges Klassendesign verstanden werden.
 
 ## Living Objects
 
 Wie bereits bei Messaging angesprochen ist es schlechtes Objektorientiertes Design, wenn die Objekte 
-kein Behaviour und somit kein "Leben" haben. Das Prinzip Living Objects bemüht sich darum, den seelenlosen Klassen
-leben einzuhauchen und den Sprung von strukturierter hin zum objektorientierter Entwicklung zu machen.
-Es gibt sicherlich Parallelen zum "Messaging" Prinzip aber was bringt einem gutes Messaging, wenn 
+kein Behaviour haben. Das Prinzip Living Objects bemüht sich darum, den Klassen
+mehr leben einzuhauchen und den Sprung von strukturierter hin zu objektorientierter Entwicklung zu machen.
+Es gibt Parallelen zum "Messaging" Prinzip aber was bringt gutes Messaging, wenn 
 alle Klassenvariablen und Methoden statisch sind?
 
 Für OO Neulinge sind statische Methoden und Variablen allzu oft verwendete OOD Killer, 
-weil sie in diesem Fall keine Attribute nutzen.
-Um einem Objekt mithilfe von OOD leben einzuhauchen braucht es Daten um einen Zustand haben zu können. 
+weil sie dadurch Instanzvariablen vermeiden.
+Damit ein Objekt ein Verhalten haben kann, braucht es Daten um den Zustand speichern zu können. 
 Diese Daten sollen intern in Form von Instanzvariablen gespeichert werden. Dadurch entsteht eine interne Struktur, 
 welche es gegen Aussen so gut wie möglich zu verbergen gilt (Information Hiding). 
 Die bereits erwähnten Getter-Methoden machen dabei das pure Gegenteil. Sie verhindern zwar den direkt Zugriff der Daten, 
 jedoch geht es bei Information Hiding weniger um das Verstecken von Daten als vielmehr um das Verstecken von 
-Design Entscheide (Strukturen) innerhalb einer Klasse.
+Design Entscheide (Strukturen) innerhalb einer Klasse[1].
 
 ## 4 Rules of Simple Design
 Das Design einer Software kann dann als Simple verstanden werden, wenn der Source-Code folgende 4 Regeln einhält:
@@ -79,7 +79,7 @@ Wie der Name schon vermuten lässt, ist das Ziel einzelne Units in 2 Kategorien 
   - Gibt die Daten an Operational Units weiter
   - Operational Units auf
   - kann andere Integration Units aufrufen
-
+ 
 [TODO: Beispiel]
 
 
