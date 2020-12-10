@@ -65,4 +65,5 @@ public class Racket {
   public int borderBottomY() {
     return y + racketHeight;
   }
+
 }

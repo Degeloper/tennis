@@ -73,4 +73,5 @@ public class Field {
     return rackets.stream()
       .anyMatch(r -> ball.collidesWithRacket(r, dx, dy));
   }
+
 }

@@ -39,4 +39,5 @@ public class Ball {
       y + dy >= racket.borderTopY() &&
       y + dy <= racket.borderBottomY();
   }
+
 }

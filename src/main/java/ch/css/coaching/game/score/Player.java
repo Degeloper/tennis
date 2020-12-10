@@ -35,4 +35,5 @@ public class Player {
   void setScore(Score score) {
     this.score = score;
   }
+
 }

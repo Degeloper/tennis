@@ -54,7 +54,6 @@ public class GameEventsHandler implements GameEvents {
       e.printStackTrace();
       return "{}";
     }
-
   }
 
 }

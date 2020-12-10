@@ -43,6 +43,10 @@ public class Game extends TimerTask {
     return field.newRacket(newPlayer);
   }
 
+  public boolean isReady() {
+    return gameEventsConsumers.size() == 2;
+  }
+
   private void givePointToOpponentAndResetBall(Player player) {
     Player opponent = scorer.opponentOf(player);
     scorer.scoreBall(opponent);
@@ -56,7 +60,4 @@ public class Game extends TimerTask {
     scorer.resetPlayers();
   }
 
-  public boolean isReady() {
-    return gameEventsConsumers.size() == 2;
-  }
 }

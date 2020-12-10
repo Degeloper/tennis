@@ -1,6 +1,7 @@
 package ch.css.coaching.game.score;
 
 public enum Score {
+
   LOVE(0) {
     public Score previous() {
       return this;
@@ -32,4 +33,5 @@ public enum Score {
   public Score previous() {
     return values()[ordinal() - 1];
   }
+
 }

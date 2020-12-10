@@ -47,4 +47,5 @@ public class Scorer {
     winner = null;
     players.clear();
   }
+
 }
