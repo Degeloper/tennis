@@ -20,10 +20,6 @@ public class Player {
     return score;
   }
 
-  void setScore(Score score) {
-    this.score = score;
-  }
-
   public void increaseScore() {
     score = score.next();
   }
@@ -34,5 +30,9 @@ public class Player {
 
   public void resetScore() {
     score = LOVE;
+  }
+
+  void setScore(Score score) {
+    this.score = score;
   }
 }

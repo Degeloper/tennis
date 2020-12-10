@@ -6,21 +6,26 @@ public class Racket {
 
   private int y;
   private final int x;
-  private final int deltaY = 7;
-
   private final int fieldHeight;
+  private final Player player;
 
   private final int racketHeight = 75;
   private final int racketWidth = 10;
+  private final int deltaY = 7;
 
-  private final Player player;
-
-  public int getY() {
-    return y;
+  public Racket(int x, int fieldHeight, Player player) {
+    this.x = x;
+    this.fieldHeight = fieldHeight;
+    this.y = (fieldHeight - racketHeight) / 2;
+    this.player = player;
   }
 
   public int getX() {
     return x;
+  }
+
+  public int getY() {
+    return y;
   }
 
   public int getHeight() {
@@ -35,20 +40,13 @@ public class Racket {
     return player;
   }
 
-  public Racket(int x, int fieldHeight, Player player) {
-    this.x = x;
-    this.fieldHeight = fieldHeight;
-    this.y = (fieldHeight - racketHeight)  / 2;
-    this.player = player;
-  }
-
   public void moveDown() {
-    if(y < fieldHeight - racketHeight)
+    if (y < fieldHeight - racketHeight)
       y += deltaY;
   }
 
   public void moveUp() {
-    if(y > 0)
+    if (y > 0)
       y -= deltaY;
   }
 

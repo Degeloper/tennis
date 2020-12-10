@@ -23,6 +23,14 @@ public class Field {
     resetBall();
   }
 
+  public List<Racket> getRackets() {
+    return rackets;
+  }
+
+  public Ball getBall() {
+    return ball;
+  }
+
   public void resetBall() {
     dx = -dx;
     this.ball = new Ball(width / 2, height / 2);
@@ -31,14 +39,6 @@ public class Field {
   public void moveBall() {
     checkCollisions();
     ball.move(dx, dy);
-  }
-
-  public List<Racket> getRackets() {
-    return rackets;
-  }
-
-  public Ball getBall() {
-    return ball;
   }
 
   public Racket newRacket(Player player) {
