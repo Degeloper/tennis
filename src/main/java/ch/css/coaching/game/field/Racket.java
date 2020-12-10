@@ -2,9 +2,6 @@ package ch.css.coaching.game.field;
 
 import ch.css.coaching.game.score.Player;
 
-import static ch.css.coaching.game.field.RacketAction.DOWN;
-import static ch.css.coaching.game.field.RacketAction.UP;
-
 public class Racket {
 
   private final int racketHeight = 75;
@@ -43,19 +40,12 @@ public class Racket {
     this.player = player;
   }
 
-  public void move(RacketAction racketAction) {
-    if(racketAction == UP)
-      moveUp();
-    else if(racketAction == DOWN)
-      moveDown();
-  }
-
-  private void moveDown() {
-    if(y < fieldHeight)
+  public void moveDown() {
+    if(y < fieldHeight - racketHeight)
       y += deltaY;
   }
 
-  private void moveUp() {
+  public void moveUp() {
     if(y > 0)
       y -= deltaY;
   }

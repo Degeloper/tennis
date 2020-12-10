@@ -1,9 +1,10 @@
 package ch.css.coaching.web;
 
 import ch.css.coaching.game.field.Racket;
-import ch.css.coaching.game.field.RacketAction;
 
 import javax.websocket.MessageHandler;
+
+import static ch.css.coaching.web.RacketHandler.RacketAction.valueOf;
 
 public class RacketHandler implements MessageHandler.Partial<String> {
 
@@ -14,8 +15,18 @@ public class RacketHandler implements MessageHandler.Partial<String> {
   }
 
   @Override
-  public void onMessage(String racketActionString, boolean last) {
-    RacketAction racketAction = RacketAction.valueOf(racketActionString);
-    racket.move(racketAction);
+  public void onMessage(String racketAction, boolean last) {
+    switch (valueOf(racketAction)) {
+      case UP:
+        racket.moveUp();
+        break;
+      case DOWN:
+        racket.moveDown();
+        break;
+    }
+  }
+
+  enum RacketAction {
+    UP, DOWN
   }
 }

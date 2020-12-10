@@ -5,7 +5,7 @@ Bei der Aufgabe handelt es sich um ein Tennis Game, welches folgende Coding Kata
 https://codingdojo.org/kata/Tennis/
 
 ## Features
-- Browser Applikation
+- Browser Applikation (unterstützte Browser: Firefox)
 - Berechnung des Balles in Echtzeit
 - Steuern des Rackets via Pfeiltasten
 - 2 Spieler Multiplayer
@@ -36,7 +36,8 @@ https://codingdojo.org/kata/Tennis/
 
 
 ### Mit TDD entwickelte Packages
-Package: ch.css.coaching.game.score
+Alle Klassen in folgendem Package wurde mithilfe von TDD entwickelt:
+`ch.css.coaching.game.score`
 
 ### Offene Features
 - Automatisches Wiederverbinden nach Verbindungsunterbruch
