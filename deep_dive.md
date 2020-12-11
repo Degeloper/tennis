@@ -10,15 +10,16 @@
 
 ## Messaging
 
-In der OO-Programmierung ging es dem Erfinder Alan Kay primär nicht darum, die Welt möglichst realitätsnahe in Klassen zu unterteilen.
-Viel wichtiger ist das Augenmerk darauf zu richten, wie Objekte miteinander interagieren.
+In der OO-Programmierung ging es dem Erfinder Alan Kay primär nicht darum,
+die Welt möglichst realitätsnahe in Klassen zu unterteilen.
+Viel wichtiger ist das Augenmerk darauf zu richten, wie Objekte miteinander interagieren (Messaging) und welche Daten sie
+benötigen (Data-Flow) um Ihre Aufgabe erledigen zu können ([Alan Kays Definition Of Object Oriented][1])
 
-In der OO-Entwicklung kommt es häufig vor, dass zwar die Domäne sauber in Klassen abgebildet wird, 
-diese dann aber dumme Datenhüllen sind. 
-Sie enthalten kein Behaviour und tragen die innere Struktur der Klasse nach Aussen, indem sie diese mit Getter Methoden
-beleuchten (siehe auch "Living Objects"):
+In der OO-Entwicklung neigt man dazu, zwar die Domäne sauber in Klassen abzubilden, 
+diese dann aber dumme Datenhüllen sind. Sie enthalten kein Behaviour und tragen die innere Struktur der Klasse nach Aussen, 
+indem sie diese mit Getter Methoden beleuchten (siehe auch "Living Objects").
 
-Ein hilfreiches Konzept um solche Klassen zu vermeiden ist [Tell don't ask (Martin Fowler)][1].
+Ein hilfreiches Konzept um solche Klassen zu vermeiden ist [Tell don't ask (Martin Fowler)][2].
 
 Die öffentlichen Methoden einer Klasse sollen anderen Objekten aufzeigen, wie damit interagiert werden kann (API).
 Wenn z.B. Objekt A eine Methode von Objekt B aufruft, schickt er ihm eine Nachricht (Message). 
@@ -32,20 +33,20 @@ Quelle: https://martinfowler.com/bliki/TellDontAsk.html
 
 ## Living Objects
 
-Wie bereits bei Messaging angesprochen ist es schlechtes Objektorientiertes Design, wenn die Objekte 
+Wie bereits bei Messaging angesprochen ist es schlechtes objektorientiertes Design (OOD), wenn die Objekte 
 kein Behaviour haben. Das Prinzip Living Objects bemüht sich darum, den Klassen
 mehr leben einzuhauchen und den Sprung von strukturierter hin zu objektorientierter Entwicklung zu machen.
 Es gibt Parallelen zum "Messaging" Prinzip aber was bringt gutes Messaging, wenn 
 alle Klassenvariablen und Methoden statisch sind?
 
-Für OO Neulinge sind statische Methoden und Variablen allzu oft verwendete OOD Killer, 
-weil sie dadurch Instanzvariablen vermeiden.
-Damit ein Objekt ein Verhalten haben kann, braucht es Daten um den Zustand speichern zu können. 
-Diese Daten sollen intern in Form von Instanzvariablen gespeichert werden. Dadurch entsteht eine interne Struktur, 
-welche es gegen Aussen so gut wie möglich zu verbergen gilt (Information Hiding). 
+Statische Methoden sind OOD Killer und können für OO-Neulinge verlockend wirken.
+Statische Methoden verunmöglichen zudem den Einsatz von Instanzvariablen.
+Damit ein Objekt ein Verhalten haben kann, braucht es aber Daten um seinen Zustand speichern zu können.
+Diese Daten sollen intern in Form von Instanzvariablen gespeichert werden. 
+Dadurch entsteht eine interne Struktur, welche es gegen Aussen so gut wie möglich zu verbergen gilt (Information Hiding). 
 Die bereits erwähnten Getter-Methoden machen dabei das pure Gegenteil. Sie verhindern zwar den direkten Zugriff der Daten, 
 jedoch geht es bei Information Hiding weniger um das Verstecken von Daten als vielmehr um das Verstecken von 
-Design Entscheide (Strukturen) innerhalb einer Klasse ([Protected Variation, Craig Larman][2]).
+Design Entscheide (Strukturen) innerhalb einer Klasse ([Protected Variation, Craig Larman][3]).
 
 ## 4 Rules of Simple Design
 Das Design einer Software wird dann als simpel verstanden, wenn der Source-Code alle folgende 4 Regeln einhält:
@@ -55,7 +56,7 @@ Das Design einer Software wird dann als simpel verstanden, wenn der Source-Code 
 3. reveals its intent
 4. has fewer classes/modules/packages
 
-Besonders den 2. und 3. Regel sollte besondere Beachtung geschenkt werden. 
+Vor allem der 2. und 3. Regel sollte besondere Beachtung geschenkt werden. 
 In der Theorie führt die Erfüllung der Disziplinen "minimize duplication" und "reveal its intent" automatisch
 zu minimierter Anzahl von Klassen/Modulen/Packages. 
 
@@ -67,7 +68,8 @@ Einer der schwersten (wenn nicht die schwerste) Disziplin im Alltag eines Entwic
 Vor allem für die Einhaltung der 3. Regel verbirgt sich darin die grösste Herausforderung. Oft fehlt es einem schwer, 
 Dinge wie Klassen, Methoden oder Variablen sinnvoll zu benennen. 
 Und oftmals liegt das Problem ganz einfach darin, dass das zu benennende Ding mehrere Verantwortlichkeiten besitzt (SRP).
-Im Laufe des Refactoringprozesses wird eine Methode/Klasse/Variable mehrfach umbenannt und durchläuft meist folgende Stadien:   
+Im Laufe des Refactoring-Prozesses wird eine Methode/Klasse/Variable mehrfach umbenannt und kann dann folgende Stadien
+durchlaufen:   
 
 1. nonsense
 2. accurate-but-vague
@@ -119,15 +121,15 @@ Dimensionen von Software können horizontal und vertikal gemessen werden.
 
 ### Horizontale Metrik
 Die maximale Einrückungstiefe ist eine einfache aber effektive Metrik wie die horizontale Komplexität 
-ermittelt werden kann ([Your Code as a Crime Scene, Adam Tornhill][3]).
-Die Einrückungstiefe hat dabei direkten Einfluss auf die Symmetrie der Software (siehe "Software Aesthetics").
+ermittelt werden kann ([Your Code as a Crime Scene, Adam Tornhill][4]).
+Die Einrückungstiefe hat einen direkten Einfluss auf die Symmetrie der Software (siehe "Software Aesthetics").
 
 ### Vertikale Metrik
-Eine hohe vertikale Komplexität von Source Code bedeutet zu viele Anzahl Zeilen in einer Klasse und letztendlich 
-ein Verstoss gegen das Single Responsibility Pattern (SRP).
-
+Eine hohe vertikale Komplexität von Source Code bedeutet zu viele Anzahl Zeilen in einer Klasse.
+Dies kann auf einen Verstoss gegen das Single Responsibility Pattern (SRP) hindeuten.
 
 # Design-Mindset
+
 ## Software Aesthetics
 
 Software Aesthetics beschäftigt sich mit der allgemeinen Symmetrie von Source Code.
@@ -172,6 +174,7 @@ Durch das Zusammenkneifen der Augen wird die Struktur des eigenen Source Code ob
 Ungewohnte Formen können dann auf zu tief verschachtelte `if` Statements und häufige Farbwechsel
 auf zu komplexen Abstraktionen hindeuten (gute IDE vorausgesetzt).
 
-[1]: https://martinfowler.com/bliki/TellDontAsk.html
-[2]: https://martinfowler.com/ieeeSoftware/protectedVariation.pdf
-[3]: https://www.simpleorientedarchitecture.com/book-review-your-code-as-a-crime-scene/
+[1]: https://wiki.c2.com/?AlanKaysDefinitionOfObjectOriented
+[2]: https://martinfowler.com/bliki/TellDontAsk.html
+[3]: https://martinfowler.com/ieeeSoftware/protectedVariation.pdf
+[4]: https://www.simpleorientedarchitecture.com/book-review-your-code-as-a-crime-scene/
