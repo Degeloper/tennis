@@ -7,11 +7,10 @@ https://codingdojo.org/kata/Tennis/
 ## Features
 - Browser Applikation (unterstützte Browser: Firefox)
 - Berechnung des Balles in Echtzeit
-- Steuern des Rackets via Pfeiltasten
+- Vertikale Steuerung des Rackets (Spielfigur) via Pfeiltasten
+- Anzeigen von eigenem und gegnerischem Racket in Echtzeit
 - 2 Spieler Multiplayer
 - Lobbyfunktion in welcher 2 Spieler joinen können
-- Anzeigen von eigenem und gegnerischem Racket (Spielfigur) in Echtzeit
-- Vertikale Steuerung des Rackets via Pfeiltasten
 
 ## Spielregeln
 - Jeder Spieler kann folgender Score haben: **0, 15, 30, 40**
