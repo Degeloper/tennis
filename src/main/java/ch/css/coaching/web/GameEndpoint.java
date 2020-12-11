@@ -4,6 +4,7 @@ import ch.css.coaching.game.Game;
 import ch.css.coaching.game.field.Field;
 import ch.css.coaching.game.field.Racket;
 import ch.css.coaching.game.score.Player;
+import ch.css.coaching.game.score.Scorer;
 
 import javax.websocket.CloseReason;
 import javax.websocket.Endpoint;
@@ -16,7 +17,10 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class GameEndpoint extends Endpoint {
 
-  private static final Game game = new Game(new Field(480, 320));
+  private static final Field field = new Field(480, 320);
+  private static final Scorer scorer = new Scorer();
+  private static final Game game = new Game(field, scorer);
+
   private final ScheduledExecutorService gameScheduler = Executors.newScheduledThreadPool(1);
 
   @Override

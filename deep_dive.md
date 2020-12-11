@@ -16,15 +16,15 @@ Viel wichtiger ist das Augenmerk darauf zu richten, wie Objekte miteinander inte
 benötigen (Data-Flow) um Ihre Aufgabe erledigen zu können ([Alan Kays Definition Of Object Oriented][1])
 
 In der OO-Entwicklung neigt man dazu, zwar die Domäne sauber in Klassen abzubilden, 
-diese dann aber dumme Datenhüllen sind. Sie enthalten kein Behaviour und tragen die innere Struktur der Klasse nach Aussen, 
-indem sie diese mit Getter Methoden beleuchten (siehe auch "Living Objects").
+diese dann aber dumme Datenhüllen sind. Sie enthalten kein Verhalten (behaviour) und tragen die innere Struktur der 
+Klasse nach Aussen, indem sie diese mit Getter Methoden beleuchten (siehe auch "Living Objects").
 
 Ein hilfreiches Konzept um solche Klassen zu vermeiden ist [Tell don't ask (Martin Fowler)][2].
 
 Die öffentlichen Methoden einer Klasse sollen anderen Objekten aufzeigen, wie damit interagiert werden kann (API).
 Wenn z.B. Objekt A eine Methode von Objekt B aufruft, schickt er ihm eine Nachricht (Message). 
 Die Nachricht soll dem Empfänger möglichst konkret sagen, was zu tun ist (tell!). 
-Die Nachricht, die an den Aufrufer zurückgeschickt wird, soll ihn nicht zum Nachfragen animieren (don't ask!).
+Die Daten, die an den Aufrufer zurückgeschickt werden, sollen ihn nicht zum Nachfragen animieren (don't ask!).
 
 ![](images/TellDontAsk.png)
 
@@ -34,13 +34,13 @@ Quelle: https://martinfowler.com/bliki/TellDontAsk.html
 ## Living Objects
 
 Wie bereits bei Messaging angesprochen ist es schlechtes objektorientiertes Design (OOD), wenn die Objekte 
-kein Behaviour haben. Das Prinzip Living Objects bemüht sich darum, den Klassen
+kein Verhalten haben. Das Prinzip Living Objects bemüht sich darum, den Klassen
 mehr leben einzuhauchen und den Sprung von strukturierter hin zu objektorientierter Entwicklung zu machen.
 Es gibt Parallelen zum "Messaging" Prinzip aber was bringt gutes Messaging, wenn 
 alle Klassenvariablen und Methoden statisch sind?
 
 Statische Methoden sind OOD Killer und können für OO-Neulinge verlockend wirken.
-Statische Methoden verunmöglichen zudem den Einsatz von Instanzvariablen.
+Statische Methoden verunmöglichen aber den Einsatz von Instanzvariablen.
 Damit ein Objekt ein Verhalten haben kann, braucht es aber Daten um seinen Zustand speichern zu können.
 Diese Daten sollen intern in Form von Instanzvariablen gespeichert werden. 
 Dadurch entsteht eine interne Struktur, welche es gegen Aussen so gut wie möglich zu verbergen gilt (Information Hiding). 
@@ -65,7 +65,7 @@ Die Unit Tests können auch als Beweis dafür verstanden werden, dass der Code e
 simpel designt ist.
 
 Einer der schwersten (wenn nicht die schwerste) Disziplin im Alltag eines Entwicklers ist die adäquate Vergabe von Namen.
-Vor allem für die Einhaltung der 3. Regel verbirgt sich darin die grösste Herausforderung. Oft fehlt es einem schwer, 
+Vor allem für die Einhaltung der 3. Regel verbirgt sich darin die grösste Herausforderung. Oft fällt es einem schwer, 
 Dinge wie Klassen, Methoden oder Variablen sinnvoll zu benennen. 
 Und oftmals liegt das Problem ganz einfach darin, dass das zu benennende Ding mehrere Verantwortlichkeiten besitzt (SRP).
 Im Laufe des Refactoring-Prozesses wird eine Methode/Klasse/Variable mehrfach umbenannt und kann dann folgende Stadien
@@ -76,13 +76,12 @@ durchlaufen:
 3. precise
 4. meaningful/intention-revealing
 
-Für Stadium 1 kann ein Platzhalter wie `foo()` genommen werden. Dieser dient lediglich zur erfolgreichen Kompilierung.
+Für Stadium 1 wird ein Platzhalter wie `foo()` verwendet. Dieser dient lediglich zur erfolgreichen Kompilierung.
 In Stadium 4 ist die optimale Abstraction erreicht. Die Intention der Variable/Methode/Klasse ist mithilfe des Namens
 selbsterklärend. 
 Wichtig ist auch die Beachtung der Länge bei der Namensgebung (siehe auch "Software Aesthetics"). 
 
 ## IOSP
-
 Das Integration Operation Segregation Principle (IOSP) wurde von Ralf Westphal erfunden.
 Das Prinzip separiert Code in einzelne Units und kategorisiert diese:
 
@@ -135,14 +134,14 @@ Dies kann auf einen Verstoss gegen das Single Responsibility Pattern (SRP) hinde
 Software Aesthetics beschäftigt sich mit der allgemeinen Symmetrie von Source Code.
 Es geht darum sich Fragen zu stellen wie:
 
-- Anzahl der Tests ausgleichend zur Anzahl der produktiven Methoden?
-- Verhältnis von vertikale mit der horizontalen Dimension im Gleichgewicht? 
-- Ist die Größe der vorhandenen Klassen ähnlich oder gibt es Gott-Klassen?
+- Ist Anzahl der Tests ausgleichend zur Anzahl der produktiven Methoden?
+- Ist das Verhältnis von vertikale mit der horizontalen Dimension im Gleichgewicht? 
+- Ist die Größe der vorhandenen Klassen ähnlich?
 - Wann muss ich dieses Design etwas aufweichen (Asymmetrie) um ein besseres Ergebnis zu erreichen?
 - Verhältnis von Imports zu Anzahl Zeilen
 - Verhältnis von externen zu internen Dependencies
 
-### Symmetrie
+### Namensgebung
 Ein wichtiger Aspekt in der Symmetrie ist Länge von Methodennamen.
 Generell gilt für die Namensgebung: 
 Je grösser der Scope (Sichtbarkeit) einer Methode/Klasse/Variable, desto kürzer sollte der Name sein: 

@@ -13,11 +13,12 @@ import java.util.TimerTask;
 public class Game extends TimerTask {
 
   private final Field field;
-  private final Scorer scorer = new Scorer();
+  private final Scorer scorer;
   private final List<GameEvents> gameEventsConsumers = new ArrayList<>();
 
-  public Game(Field field) {
+  public Game(Field field, Scorer scorer) {
     this.field = field;
+    this.scorer = scorer;
   }
 
   @Override
