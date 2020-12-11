@@ -14,7 +14,7 @@ In der OO-Programmierung ging es dem Erfinder Alan Kay primär nicht darum, die 
 Viel wichtiger ist das Augenmerk darauf zu richten, wie Objekte miteinander interagieren.
 
 In der OO-Entwicklung kommt es häufig vor, dass zwar die Domäne sauber in Klassen abgebildet wird, 
-diese dann aber dumme Datentöpfe sind. Die Objekte sind dann seelenlose Datenträger und zur Rechtfertigung als DTOs oder POJOs betitelt.
+diese dann aber dumme Datenhüllen sind. 
 Sie enthalten kein Behaviour und tragen die innere Struktur der Klasse nach Aussen, indem sie diese mit Getter Methoden
 beleuchten (siehe auch "Living Objects"):
 
